@@ -16,29 +16,6 @@ The main components are:
 * UseCase
 * Repository
 
-### 1.2 KTAndroidArchitecture main components
-
-#### 1.2.1 UI
-
-The UI layer of the architecture comprises activities, fragments and views. 
-
-#### 1.2.2 UIModel
-
-A **UIModel** is a object which contains all UI-related datas of a view, a fragment or an activity
-
-#### 1.2.3 ViewModels with Livedata
-
-Each activity or fragment could have a **ViewModel** which is a object designed to store and manage UI-related data in a lifecycle conscious way by defining some **Actions** to call one or more **UseCases**
-
-#### 1.2.4 UseCase
-A **UseCase** is a wrapper for a small business logic operation. A **UseCase** can use one or more **Repository** to get or write the requested data, then it returns the response event.
-
-#### 1.2.5 Repository
-A **Repository** handles the process of saving or retrieving data from a datasource, it is managed by one or more **UseCase**.
-
-#### 1.2.6 Action
-An **Action** handles the process of calling a **UseCase** and map the response, generally an action use only one **UseCase** but is possible to define an ActionQueue to call multiple **UseCases** sequentially.
-
 ## 2. How to use it?
 
 ### 2.1 Import dependency
@@ -72,7 +49,9 @@ A ViewModel needs to extend an abstract class BaseViewModel
 ```kotlin
 class LoginViewModel: BaseViewModel()
 ```
+
 #### 2.4.1 Define an Action inside the ViewModel
+
 An **Action** can be created by using a Builder like this
 ```kotlin
 val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
@@ -80,7 +59,12 @@ val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
             .buildWithUiModel { it }
 ```
 
+![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/ActionFlowDiagram.png)
+
 ### 2.5 Call the Action from the Activity/Fragment
+
+![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/UI_to_VM.png)
+
 An action has several methods like:
 - ``` action?.observe(...) ```, this method observe the success of the operation defined inside the usecase;
 - ``` action?.observeFailure(...) ```, this method observe the failure of the operation; 
@@ -93,6 +77,37 @@ To call an action you have to write thisù
         viewModel?.action?.observeFailure(this, ::onActionFailed)
         viewModel?.action?.execute(Params)
 ```
+
+## 3 KTAndroidArchitecture main components
+
+### 3.1 UI
+
+The UI layer of the architecture comprises activities, fragments and views. 
+
+### 3.2 UIModel
+
+A **UIModel** is a object which contains all UI-related datas of a view, a fragment or an activity
+
+### 3.3 ViewModels with Livedata
+
+Each activity or fragment could have a **ViewModel** which is a object designed to store and manage UI-related data in a lifecycle conscious way by defining some **Actions** to call one or more **UseCases**
+
+### 3.4 UseCase
+A **UseCase** is a wrapper for a small business logic operation. A **UseCase** can use one or more **Repository** to get or write the requested data, then it returns the response event.
+
+### 3.5 Repository
+A **Repository** handles the process of saving or retrieving data from a datasource, it is managed by one or more **UseCase**.
+
+### 3.6 Action
+An **Action** handles the process of calling a **UseCase** and map the response, generally an action use only one **UseCase** but is possible to define an **ActionQueue** to call multiple **UseCases** sequentially.
+
+**Action**
+
+![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionSingleUseCase.png "Action")
+
+**ActionQueue**
+
+![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionQueue.png "ActionQueue")
 
 # Licence
 
