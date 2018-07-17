@@ -1,5 +1,5 @@
 # KTAndroidArchitecture
-A kotlint android architecture with Google Architecture Components
+A Kotlin android architecture with Google Architecture Components
 ## 1. A Brief Introduciton
 The app is a sample project that shows how to implement the KTAndroidArchitecture into your Android app.
 
@@ -61,6 +61,14 @@ val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/ActionFlowDiagram.png)
 
+The flow have these steps:
+1. the execution of an Action performed by the method execute(...) of Action class
+2. the first logical step is the post of an object inside an internal livedata called LoadingLiveData indicating that loading has started; the UI can observe this LiveData using the method observeLoadingStatus(...)
+3. the next step is the execution of a usecase which use repositories to retrieve some datas
+4. the result of repositories' call returned to the usecase
+5. the post of an object inside an internal livedata called LoadingLivedata indicating that loading has finished; the UI can observe this LiveData using the method observeLoadingStatus(...)
+6. the post of the usecase result in two internal livedatas based on the success or the failure; the UI can observe these two LiveDatas by using observe(...) and observeFailure(...)
+
 ### 2.5 Call the Action from the Activity/Fragment
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/UI_to_VM.png)
@@ -109,7 +117,7 @@ An **Action** handles the process of calling a **UseCase** and map the response,
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionQueue.png "ActionQueue")
 
-# Licence
+# License
 
       Copyright (C) 2017 Sysdata S.p.A.
 
