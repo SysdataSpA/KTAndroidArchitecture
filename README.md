@@ -56,7 +56,7 @@ An **Action** can be created by using a Builder like this
 ```kotlin
 val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
             .useCase(LoginUseCase::class.java)
-            .buildWithUiModel { it }
+            .buildWithUiModel { UiModel(it) }
 ```
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/ActionFlowDiagram.png)
@@ -108,14 +108,28 @@ A **Repository** handles the process of saving or retrieving data from a datasou
 
 ### 3.6 Action
 An **Action** handles the process of calling a **UseCase** and map the response, generally an action use only one **UseCase** but is possible to define an **ActionQueue** to call multiple **UseCases** sequentially.
+Into an **ActionQueue** each **UseCase**, except the first, take the result of the previous as parameters and give the output to the next.
 
 **Action**
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionSingleUseCase.png "Action")
 
+```kotlin
+val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
+            .useCase(LoginUseCase::class.java)
+            .buildWithUiModel { UiModel(it) }
+```
+
 **ActionQueue**
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionQueue.png "ActionQueue")
+
+```kotlin
+val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
+        .setFirstUseCase(FirstUseCase::class.java)
+        .addUseCase(...)
+        .setLastUseCase(...)
+```
 
 # License
 
