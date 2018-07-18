@@ -20,6 +20,15 @@ The main components are:
 
 ### 2.1 Import dependency
 
+#### 2.1.1 in **Project level `build.gradle`** add this repository
+```gradle
+   maven { url  'https://dl.bintray.com/sysdata/maven' }
+```
+#### 2.1.2 in your **App level `build.gradle`** add this dependecy
+```gradle
+    implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.0'
+```
+
 ### 2.2 Create a Repository
 A repository needs just to extend **BaseRepository** in this way 
 ```kotlin
