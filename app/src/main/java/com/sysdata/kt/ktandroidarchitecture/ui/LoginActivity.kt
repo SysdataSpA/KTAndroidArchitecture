@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import com.sysdata.kt.ktandroidarchitecture.R
+import com.sysdata.kt.ktandroidarchitecture.repository.model.UIUserLogged
 import com.sysdata.kt.ktandroidarchitecture.repository.model.UserLogged
 import com.sysdata.kt.ktandroidarchitecture.usecase.LoginActionParams
 import com.sysdata.kt.ktandroidarchitecture.viewmodel.LoginViewModel
@@ -42,7 +43,7 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
         Toast.makeText(this, "failure : ${failure.toString()}", Toast.LENGTH_SHORT).show()
     }
 
-    private fun onUserLoggged(userLogged: UserLogged?) {
+    private fun onUserLoggged(userLogged: UIUserLogged?) {
         Toast.makeText(this, "user : ${userLogged?.email}", Toast.LENGTH_SHORT).show()
     }
 
