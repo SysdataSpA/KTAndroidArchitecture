@@ -87,9 +87,9 @@ ext {
     // VERSION_ID
     libraryVersion = version
 
-    developerId = 'sysdata-mobile'
-    developerName = ''
-    developerEmail = 'team.mobile@sysdata.it'
+    developerId = properties.getProperty("bintray.developer.id")
+    developerName = properties.getProperty("bintray.developer.name")
+    developerEmail = properties.getProperty("bintray.developer.email")
 
     bintrayRepo = 'maven'
     bintrayName = 'KTAndroidArchitecture'
