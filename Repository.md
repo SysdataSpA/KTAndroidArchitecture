@@ -14,5 +14,5 @@ I dati risposti da una chiamata al repository, possono essere recuperati da qual
 
 Qualsiasi sorgente di dati deve essere invocata dal repository.
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/ActionFlowDiagram.png)
+![alt text](https://github.com/bbrends/KTAndroidArchitecture/blob/patch-1/repository.png)
 
