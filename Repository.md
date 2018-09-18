@@ -3,32 +3,32 @@
 
 ### 1.1 What is repository?
 A Repository handles the process of saving or retrieving data from a datasource, it is managed by one or more UseCase.
-Il repository equivale al concetto di contenitore di dati. 
+The repository is a sort of data storage. 
 
-I dati risposti da una chiamata al repository, possono essere recuperati da qualsiasi sorgente:
-* Database Locale
-* Web Service Remoti
-* Connessione Bluetooth con altri dispositivi
-* Recupero dati dai sensori del device
+The datas retrieved by a repository's call, can come from each one of this sources:
+* Local Databases
+* Remote Web Services
+* Bluetooth connection with other devices
+* Data from device sensors
 * etc
 
-Qualsiasi sorgente di dati deve essere invocata dal repository.
+Each data source has to be called by the repository.
 
 ![alt text](https://github.com/bbrends/KTAndroidArchitecture/blob/patch-1/repository.png)
 
 ### 1.2 How it works?
 
-Come mostrato nell'immagine sopra, il flusso di recupero dati tramite repository è piuttosto lineare:
-* lo UseCase invoca un metodo del repository che si occupa del recupero dei dati (implementazione diversa a seconda della tipologia di sorgente dati)
-* avviene il recupero dei dati (ad esempio al web service tramite retrofit)
-* viene creato un oggetto Either che effettua il Wrap dell'oggetto di risposta o dell'oggetto di errore
-* l'oggetto Either viene tornato allo UseCase che ha invocato il repository
+As shown in the image above, the flow of retreiving data through repository is pretty linear:
+* the UseCase invoke a repository's method which handles the data retrieving (The implementation changes with the data source)
+* the repository's method retrieve the datas (i.e. calling a web service through retrofit)
+* Is created an instance of Either object which wrap the response or the error object
+* the Either object goes to the UseCase which has called the repository
 
 ### 1.3 Either
 
-Come visto nel paragrafo precedente, l'oggetto Either ha la funzione di veicolare un modello di dati in caso di recupero avvenuto con successo, oppure di restituire un oggetto di errore in caso di fallimento.
+As seen in the previous paragraph, the Either object has the function to convey a data model in case of successfully data retreiving, or return an error object in case of failure.
 
-La modalità di utilizzo è molto semplice:
+Use the object is very simple:
 
 ```
 suspend inline fun fakeCall(param: String? = null): Either<Failure, SignInResponse> {
@@ -48,13 +48,13 @@ suspend inline fun fakeCall(param: String? = null): Either<Failure, SignInRespon
     }
 ```
 
-In caso di success, occorre invocare il metodo "Right" con il modello dei dati mappato.
-In caso di failure, occorre invocare il metodo "Left" con il modello dell'errore (in questo caso la classe ServerError presente in Failure.kt). 
-Se è presente l'esigenza di creare modelli di errori custom, è sufficiente creare una classe che estenda FeatureFailure.
+When success, you need to invoke the method "Right" with the mapped data model.
+When failure, you need to invoke the method "Left" with the model of the error(in the example above the class ServerError in Failure.kt). 
+If you need a custom error model, you have to extend the class FeatureFailure.
 
 ### 1.4 Sample
 
-Di seguito un esempio completo di Repository:
+Below a complete example of Repository:
 
 ```
 class SampleRepo : BaseRepository() {
