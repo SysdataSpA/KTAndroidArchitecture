@@ -5,13 +5,16 @@ A UIModel is a object which contains all UI-related datas of a view, a fragment 
 
 Per capire il concetto di UiModel, facciamo un passo indietro:
 immaginiamo un normale flusso di recupero e visualizzazione dei dati.
+
 I componenti di questo flusso saranno quindi un server che contiene i dati ed il client che li visualizza.
 Verosimilmente, il server potrebbe servire altri client oltre al nostro che avranno esigenze di visualizzazione/logica diverse;
 ne consegue che i dati tornati potrebbero essere sporchi, ci potrebbero essere informazioni superflue oppure per visualizzare un dato dobbiamo compiere
 un'operazione di merge di vari parametri.
+
 Questo ci porta ad intendere i dati che ci arrivano dal web service come grezzi: "RAW".
 
 Nella nostra interfaccia grafica, invece, occorrono dati ben precisi e ben mappati.
+
 Nasce quindi la necessità di creare un modello dei dati che serva unicamente l'interfaccia grafica,
 scartando tutto quello che non serve e effettuando tutte le elaborazioni dei dati necessari prima che
 questi arrivino alla view.
@@ -20,6 +23,18 @@ questi arrivino alla view.
 
 ### 1.2 When does it happen?
 
+La trasformazione da oggetto grezzo proveniente dal web service a uiModel avviene nel ViewModel.
+Nello specifico, all'interno del flusso di Action, in coda al risultato dello UseCase, all'interno del metodo "buildWithUiModel":
+
+```
+val actionSample = Action.Builder<ActionParams,Model,UiModel>()
+            .useCase(SampleUseCase::class.java)
+            .buildWithUiModel {
+                //map model into UiModel
+                UiModel(it)
+            }
+
+```
 
 
-### 1.3 Bind
+### 1.3 DataBinding
