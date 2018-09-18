@@ -3,28 +3,25 @@
 ### 1.1 What is UiModel?
 A UIModel is a object which contains all UI-related datas of a view, a fragment or an activity
 
-Per capire il concetto di UiModel, facciamo un passo indietro:
-immaginiamo un normale flusso di recupero e visualizzazione dei dati.
+To fully understand the concept of UiModel, let's do a step back:
+think about a normal flow of retrieving and showing datas.
 
-I componenti di questo flusso saranno quindi un server che contiene i dati ed il client che li visualizza.
-Verosimilmente, il server potrebbe servire altri client oltre al nostro che avranno esigenze di visualizzazione/logica diverse;
-ne consegue che i dati tornati potrebbero essere sporchi, ci potrebbero essere informazioni superflue oppure per visualizzare un dato dobbiamo compiere
-un'operazione di merge di vari parametri.
+The components of this flow will be a server, which contains the datas, and a client, which shows them.
+Likely, the server will be accessed by clients different from ours;
+so the datas returned by the server could be dirty, with unnecessary information or parameters which needs to be elaborated after the retrieving.
 
-Questo ci porta ad intendere i dati che ci arrivano dal web service come grezzi: "RAW".
+This takes us to treat the datas from the web service as "RAW" datas.
 
-Nella nostra interfaccia grafica, invece, occorrono dati ben precisi e ben mappati.
+Our graphic interface, instead, need specific and well mapped datas.
 
-Nasce quindi la necessità di creare un modello dei dati che serva unicamente l'interfaccia grafica,
-scartando tutto quello che non serve e effettuando tutte le elaborazioni dei dati necessari prima che
-questi arrivino alla view.
+There is the need to create a data model only for the graphic interface, ignoring all unnecessary datas and elaborating others before passing them to the view.
 
 ![alt text](https://github.com/bbrends/KTAndroidArchitecture/blob/patch-1/uimodel.png)
 
 ### 1.2 When does it happen?
 
-La trasformazione da oggetto grezzo proveniente dal web service a uiModel avviene nel ViewModel.
-Nello specifico, all'interno del flusso di Action, in coda al risultato dello UseCase, all'interno del metodo "buildWithUiModel":
+The trasformation from raw web service's object to uiModel is done into the ViewModel.
+Specifically, into the Action flow, after the usecase, inside the "buildWithUiModel" method:
 
 ```
 val actionSample = Action.Builder<ActionParams,Model,UiModel>()
@@ -39,21 +36,19 @@ val actionSample = Action.Builder<ActionParams,Model,UiModel>()
 
 ### 1.3 DataBinding
 
-Abbiamo quasi concluso il flusso di recupero e visualizzazione dei dati.
-Manca solo il passaggio dello uiModel dal ViewModel alla view.
+We have almost ended the flow of retrieving and showing datas.
+There is only the transition of the uiModel from the ViewModel to the view.
 
-Riprendendo il concetto di Action, all'interno della view occorre settare un observer del
-risultato dell'azione:
+Coming back to the idea of Action, inside the view you need to set an observer of the action's result:
 
 ```
 mViewModel?.actionSample?.observe(this, ::onSampleObserver)
 ```
 
-Tale observer ci permetterà di rimanere in ascolto del risultato della action e di settare lo UiModel
-all'interno della view.
+This observer make possible to listen the action's result and set the UiModel inside the view.
 
-DataBinding è il nome di questa operazione:
-viene iniettato lo uimodel direttamente all'interno della view.
+This operation is called DataBinding:
+a uimodel is injected directly into the view.
 
 ```
 fun onSampleObserver(uiModel: UIModel?) {
