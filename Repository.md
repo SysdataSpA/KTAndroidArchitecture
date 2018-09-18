@@ -31,7 +31,7 @@ As seen in the previous paragraph, the Either object has the function to convey 
 Use the object is very simple:
 
 ```
-suspend inline fun fakeCall(param: String? = null): Either<Failure, SignInResponse> {
+suspend inline fun retriveDataCall(param: String? = null): Either<Failure, SignInResponse> {
 
         val bodyRequest = RequestModel().param(param)
 
