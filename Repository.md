@@ -31,13 +31,13 @@ Come visto nel paragrafo precedente, l'oggetto Either ha la funzione di veicolar
 La modalità di utilizzo è molto semplice:
 
 ```
-suspend inline fun fakeCall(param: String? = null): Either<Failure, SignInResponse> {
+suspend inline fun retriveDataCall(param: String? = null): Either<Failure, SignInResponse> {
 
         val bodyRequest = RequestModel().param(param)
 
         return try {
 
-            val response = adapt(ApiClient.INSTANCE.getSampleApi().getService(bodyRequest)).await()
+            val response = adapt(ApiClient.INSTANCE.getSampleApi().getDataFromService(bodyRequest)).await()
 
             Either.Right(response)
 
@@ -49,4 +49,5 @@ suspend inline fun fakeCall(param: String? = null): Either<Failure, SignInRespon
 ```
 
 In caso di success, occorre invocare il metodo "Right" con il modello dei dati mappato.
-In caso di failure, occorre invocare il metodo "Left" con il modello dell'errore (in questo caso la classe ServerError presente in Failure.kt).
+In caso di failure, occorre invocare il metodo "Left" con il modello dell'errore (in questo caso la classe ServerError presente in Failure.kt). 
+Se è presente l'esigenza di creare modelli di errori custom, è sufficiente creare una classe che estenda FeatureFailure.
