@@ -16,3 +16,10 @@ Qualsiasi sorgente di dati deve essere invocata dal repository.
 
 ![alt text](https://github.com/bbrends/KTAndroidArchitecture/blob/patch-1/repository.png)
 
+### 1.2 How it works?
+
+Come mostrato nell'immagine sopra, il flusso di recupero dati tramite repository è piuttosto lineare:
+* a partire dallo UseCase, viene invocato un metodo del repository che si occupa del recupero dei dati (implementazione diversa a seconda della tipologia di sorgente dati)
+* viene effettuato la chiamata (ad esempio al web service tramite retrofit)
+* viene creato un oggetto Either che effettua il Wrap dell'oggetto di risposta
+* l'oggetto Either viene tornato allo UseCase che ha invocato il repository
