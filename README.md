@@ -105,6 +105,8 @@ The UI layer of the architecture comprises activities, fragments and views.
 
 A **UIModel** is a object which contains all UI-related datas of a view, a fragment or an activity
 
+Read More[a relative link](UiModel.md)
+
 ### 3.3 ViewModels with Livedata
 
 Each activity or fragment could have a **ViewModel** which is a object designed to store and manage UI-related data in a lifecycle conscious way by defining some **Actions** to call one or more **UseCases**
@@ -114,6 +116,8 @@ A **UseCase** is a wrapper for a small business logic operation. A **UseCase** c
 
 ### 3.5 Repository
 A **Repository** handles the process of saving or retrieving data from a datasource, it is managed by one or more **UseCase**.
+
+Read More[a relative link](repository.md)
 
 ### 3.6 Action
 An **Action** handles the process of calling a **UseCase** and map the response, generally an action use only one **UseCase** but is possible to define an **ActionQueue** to call multiple **UseCases** sequentially.
