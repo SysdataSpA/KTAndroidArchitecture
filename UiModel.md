@@ -16,7 +16,7 @@ Nasce quindi la necessità di creare un modello dei dati che serva unicamente l'
 scartando tutto quello che non serve e effettuando tutte le elaborazioni dei dati necessari prima che
 questi arrivino alla view.
 
-![alt text](https://github.com/bbrends/KTAndroidArchitecture/blob/patch-1/uiModel.png)
+![alt text](https://github.com/bbrends/KTAndroidArchitecture/blob/patch-1/uimodel.png)
 
 ### 1.2 When does it happen?
 
