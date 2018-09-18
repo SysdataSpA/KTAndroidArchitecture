@@ -38,3 +38,30 @@ val actionSample = Action.Builder<ActionParams,Model,UiModel>()
 
 
 ### 1.3 DataBinding
+
+Abbiamo quasi concluso il flusso di recupero e visualizzazione dei dati.
+Manca solo il passaggio dello uiModel dal ViewModel alla view.
+
+Riprendendo il concetto di Action, all'interno della view occorre settare un observer del
+risultato dell'azione:
+
+```
+mViewModel?.actionSample?.observe(this, ::onSampleObserver)
+```
+
+Tale observer ci permetterà di rimanere in ascolto del risultato della action e di settare lo UiModel
+all'interno della view.
+
+DataBinding è il nome di questa operazione:
+viene iniettato lo uimodel direttamente all'interno della view.
+
+```
+fun onSampleObserver(uiModel: UIModel?) {
+        uiModel?.let {
+            binding.uiModel = it
+            binding.executePendingBindings()
+        }
+    }
+```
+
+
