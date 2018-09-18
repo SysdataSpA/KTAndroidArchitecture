@@ -31,13 +31,13 @@ Come visto nel paragrafo precedente, l'oggetto Either ha la funzione di veicolar
 La modalità di utilizzo è molto semplice:
 
 ```
-suspend inline fun retriveDataCall(param: String? = null): Either<Failure, SignInResponse> {
+suspend inline fun fakeCall(param: String? = null): Either<Failure, SignInResponse> {
 
         val bodyRequest = RequestModel().param(param)
 
         return try {
 
-            val response = adapt(ApiClient.INSTANCE.getSampleApi().getDataFromService(bodyRequest)).await()
+            val response = adapt(ApiClient.INSTANCE.getSampleApi().getService(bodyRequest)).await()
 
             Either.Right(response)
 
@@ -51,3 +51,51 @@ suspend inline fun retriveDataCall(param: String? = null): Either<Failure, SignI
 In caso di success, occorre invocare il metodo "Right" con il modello dei dati mappato.
 In caso di failure, occorre invocare il metodo "Left" con il modello dell'errore (in questo caso la classe ServerError presente in Failure.kt). 
 Se è presente l'esigenza di creare modelli di errori custom, è sufficiente creare una classe che estenda FeatureFailure.
+
+### 1.4 Sample
+
+Di seguito un esempio completo di Repository:
+
+```
+class SampleRepo : BaseRepository() {
+
+    /**
+     * Used to recall instance only whe it need
+     */
+    private object Holder {
+        val INSTANCE = SampleRepo()
+    }
+
+    /**
+     * Used to make singleton pattern
+     */
+    companion object {
+        val instance: SampleRepo by lazy {
+            Holder.INSTANCE
+        }
+    }
+
+    /**
+     * perform a retriveDataCall request
+     *
+     * @param param
+     *
+     * @return Either
+     */
+    suspend inline fun retriveDataCall(param: String? = null): Either<Failure, SignInResponse> {
+
+        val bodyRequest = RequestModel().param(param)
+
+        return try {
+
+            val response = adapt(ApiClient.INSTANCE.getSampleApi().getService(bodyRequest)).await()
+
+            Either.Right(response)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Either.Left(Failure.ServerError(e.message))
+        }
+    }
+}
+```
