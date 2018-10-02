@@ -3,21 +3,14 @@ A Kotlin android architecture with Google Architecture Components
 ## 1. A Brief Introduciton
 The app is a sample project that shows how to implement the KTAndroidArchitecture into your Android app.
 
-* [1.1 What is KTAndroidArchitecture?](README.md#L22)
-* [2. How to use it?](README.md#L35)
+* [1.1 What is KTAndroidArchitecture?](#what-is-ktandroidarchitecture)
+* [2. How to use it?](#how-to-use-it)
    * [2.1 Import dependency](#import-dependency)
    * [2.2 Create a Repository](#create-a-repository)
    * [2.3 Create a UseCase](#create-a-usecase)
    * [2.4 Create a ViewModel](#create-a-viewmodel)
    * [2.5 Call the action](#call-the-action)
 * [3. Main components](#main-components)
-
-
-
-
-
-
-
 
 ### 1.1 What is KTAndroidArchitecture?
 It is a layer-based architecture that allows a real disentangle of the UI components from the business logic. 
