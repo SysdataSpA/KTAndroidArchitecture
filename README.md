@@ -25,7 +25,7 @@ The main components are:
 * UseCase
 * Repository
 
-## 2 How to use it?
+## 2&#46; How to use it?
 
 ### 2.1 Import dependency
 
