@@ -4,7 +4,7 @@ A Kotlin android architecture with Google Architecture Components
 The app is a sample project that shows how to implement the KTAndroidArchitecture into your Android app.
 
 * [1.1 What is KTAndroidArchitecture?](#what-is-ktandroidarchitecture)
-* [2. How to use it?](#how-to-use-it)
+* [2. How to use it?](#2-how-to-use-it)
    * [2.1 Import dependency](#import-dependency)
    * [2.2 Create a Repository](#create-a-repository)
    * [2.3 Create a UseCase](#create-a-usecase)
@@ -25,7 +25,7 @@ The main components are:
 * UseCase
 * Repository
 
-## How to use it?
+## 2 How to use it?
 
 ### 2.1 Import dependency
 
