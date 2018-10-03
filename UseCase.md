@@ -14,7 +14,9 @@ In the execution flow of a usecase we can find this steps:
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/usecase_documentation/usecase.png)
 
-A usecase have to extend the UseCase abstract class and implement the method **run** where all  the logic is placed, the caller action calls the **execute** method which calls the **run** method
+A usecase have to extend the UseCase abstract class and implement the method **run** where all  the logic is placed, the caller action calls the **execute** method which calls the **run** method.
+
+You can use also **inline usecases** defined in the action execute call.
 
 ### 1.2 Sample
 
@@ -27,4 +29,12 @@ class LoginUseCase: UseCase<UserLogged, LoginActionParams>() {
         return AuthRepository.instance.login(params.email, params.password).map { do something }
     }
 }
+```
+
+Below a example of inline UseCase:
+
+```
+Action.Builder<LoginActionParams,UserLogged, UIUserLogged>()
+        .useCase{return AuthRepository.instance.login(params.email, params.password).map { do something }}
+        ...
 ```
