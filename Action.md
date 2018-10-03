@@ -3,7 +3,7 @@
 ### 1.1 What is an Action?
 An **Action** is an object which handles the process of calling a [**UseCase**](UseCase.md) and map the response.
 
-Since the action is basically built on a Usecase to execute it we have to link it to a event through [**ViewModel**](ViewModel.md) such as clicking on a button, so that when the event happens the **execute** method which runs the UseCase and map the results.
+Since the action is basically built on a Usecase to execute it we have to link it to a event through [**ViewModel**](ViewModel.md) such as clicking on a button, so that when the event happens the **execute** method which runs the UseCase, the result is mapped and passed to the **ViewModel**.
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionSingleUseCase.png "Action")
 
