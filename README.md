@@ -15,6 +15,7 @@ The main components are:
 * [ViewModels with Livedata](ViewModel.md)
 * [UseCase](UseCase.md)
 * [Repository](Repository.md)
+* [Action](Action.md)
 
 ## 2&#46; How to use it?
 
