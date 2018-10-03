@@ -10,7 +10,7 @@ It is a layer-based architecture that allows a real disentangle of the UI compon
 
 The main components are:
 
-* [UI](Ui.md)
+* [UI](UI.md)
 * [UIModel](UiModel.md)
 * [ViewModels with Livedata](ViewModel.md)
 * [UseCase](UseCase.md)
