@@ -10,13 +10,14 @@ It is a layer-based architecture that allows a real disentangle of the UI compon
 
 The main components are:
 
-* UI
-* UIModel
-* ViewModels with Livedata
-* UseCase
-* Repository
+* [UI](UI.md)
+* [UIModel](UiModel.md)
+* [ViewModels with Livedata](ViewModel.md)
+* [UseCase](UseCase.md)
+* [Repository](Repository.md)
+* [Action](Action.md)
 
-## 2. How to use it?
+## 2&#46; How to use it?
 
 ### 2.1 Import dependency
 
@@ -113,6 +114,8 @@ Each activity or fragment could have a **ViewModel** which is a object designed 
 
 ### 3.4 UseCase
 A **UseCase** is a wrapper for a small business logic operation. A **UseCase** can use one or more **Repository** to get or write the requested data, then it returns the response event.
+
+[Read More](UseCase.md)
 
 ### 3.5 Repository
 A **Repository** handles the process of saving or retrieving data from a datasource, it is managed by one or more **UseCase**.
