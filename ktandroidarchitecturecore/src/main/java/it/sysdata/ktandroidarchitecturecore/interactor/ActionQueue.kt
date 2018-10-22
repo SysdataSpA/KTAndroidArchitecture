@@ -73,18 +73,28 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
         //  otherwise call the action with this function as function result
 
         when {
-            isLastAction -> lastUseCase.execute(::handleFailure, ::handleSuccess, model as Any)
+            isLastAction -> {
+                lastUseCase.execute(::handleFailure, ::handleSuccess, model as Any)
+                resetQueue()
+            }
             model != null -> {
                 isLastAction = index + 1 == useCaseQueue.size
                 val item = useCaseQueue[index]
                 item.execute(::handleFailure, ::handleUseCase, model)
+                index++
+
             }
-            else -> handleFailure(Failure.NullInQueue(index))
+            else -> {
+                handleFailure(Failure.NullInQueue(index))
+                resetQueue()
+            }
         }
-        index++
     }
 
-
+    private fun resetQueue() {
+        isLastAction = false
+        index = 1
+    }
     private fun handleFailure(fail: Failure) {
         loadingLiveData.postValue(false)
         failureLiveData.postValue(fail)
@@ -136,13 +146,25 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
 
         @Suppress("UNCHECKED_CAST")
         fun execute(handleFailure: (Failure) -> Unit, handleSuccess: (Any) -> Unit, model: Any) {
-            useCase.execute({ it.either(handleFailure, handleSuccess) }, handleMapping!!(model as OldModel))
+            try {
+                useCase.execute({ it.either(handleFailure, handleSuccess) }, handleMapping!!(model as OldModel))
 
+            } catch (e: Exception) {
+                // catch internal error
+                handleFailure.invoke(Failure.InternalError(e.message))
+            }
         }
 
         @Suppress("UNCHECKED_CAST")
         fun executeWithoutMapping(handleFailure: (Failure) -> Unit, handleSuccess: (Any) -> Unit, params: Any) {
-            useCase.execute({ it.either(handleFailure, handleSuccess) }, params as Params)
+            try {
+                useCase.execute({ it.either(handleFailure, handleSuccess) }, params as Params)
+
+            } catch (e: Exception) {
+                // catch internal error
+                handleFailure.invoke(Failure.InternalError(e.message))
+
+            }
 
         }
     }

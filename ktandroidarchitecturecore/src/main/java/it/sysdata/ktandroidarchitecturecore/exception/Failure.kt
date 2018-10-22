@@ -21,6 +21,8 @@ package it.sysdata.ktandroidarchitecturecore.exception
  */
 sealed class Failure {
     class NetworkConnection : Failure()
+    class InternalError(val errorMessage: String?) : Failure()
+
     class ServerError : Failure()
     class NotImplemeted : Failure()
     class NullInQueue(val useCaseindex: Int) : Failure()
