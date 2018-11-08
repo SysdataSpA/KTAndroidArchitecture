@@ -56,7 +56,7 @@ android {
 
 dependencies {
     def lifecycle_version = "1.1.1"
-    def kotlin_coroutines_version = "0.30.0"
+    def kotlin_coroutines_version = "1.0.1"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "android.arch.lifecycle:extensions:1.1.1"
 
@@ -66,11 +66,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
+
 repositories {
     mavenCentral()
     google()
