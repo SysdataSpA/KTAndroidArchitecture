@@ -17,7 +17,7 @@ package it.sysdata.ktandroidarchitecturecore.interactor
 
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
 import it.sysdata.ktandroidarchitecturecore.functional.Either
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 
 /**
  * Abstract class for a Use Case (Interactor in terms of Clean Architecture).
@@ -32,10 +32,10 @@ abstract class UseCase<out Type, in Params> where Type : Any, Params : ActionPar
     abstract suspend fun run(params: Params): Either<Failure, Type>
 
     fun execute(onResult: (Either<Failure, Type>) -> Unit, params: Params) {
-        val job = GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT, { run(params) })
-        GlobalScope.launch(Dispatchers.Default, CoroutineStart.DEFAULT, {
+        val job = GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT) { run(params) }
+        GlobalScope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
             onResult.invoke(job.await())
-        })
+        }
 
     }
 
