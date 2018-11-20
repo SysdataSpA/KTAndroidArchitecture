@@ -118,7 +118,16 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
         liveData.observe(owner, Observer(body))
 
     }
+    /**
+     * Define the function that will use for handle the result without model
+     *
+     * @param owner for [liveData]
+     * @param body  the function that will use for handle the result
+     */
+    fun observeWithoutModel(owner: LifecycleOwner, body: () -> Unit) {
+        liveData.observe(owner, Observer { body.invoke() })
 
+    }
     /**
      * Define the function that will use for handle the failure
      *
@@ -129,7 +138,16 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
         failureLiveData.observe(owner, Observer(body))
 
     }
+    /**
+     * Define the function that will use for handle the failure without type of Failure
+     *
+     * @param owner for [failureLiveData]
+     * @param body  the function that will use for handle the failure
+     */
+    fun observeFailureWithoutType(owner: LifecycleOwner, body: () -> Unit) {
+        failureLiveData.observe(owner, Observer {body.invoke()})
 
+    }
     /**
      * Define the function that will use for handle the loading
      *
