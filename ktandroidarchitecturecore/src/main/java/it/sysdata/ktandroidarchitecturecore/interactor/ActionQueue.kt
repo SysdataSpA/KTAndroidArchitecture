@@ -15,9 +15,9 @@
  */
 package it.sysdata.ktandroidarchitecturecore.interactor
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
 import it.sysdata.ktandroidarchitecturecore.functional.Either
 

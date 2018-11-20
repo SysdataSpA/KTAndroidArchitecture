@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/KTAndroidArchitecture.iml" filepath="$PROJECT_DIR$/.idea/KTAndroidArchitecture.iml" />
-      <module fileurl="file://$PROJECT_DIR$/KTAndroidArchitecture.iml" filepath="$PROJECT_DIR$/KTAndroidArchitecture.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/ktandroidarchitecturecore/ktandroidarchitecturecore.iml" filepath="$PROJECT_DIR$/ktandroidarchitecturecore/ktandroidarchitecturecore.iml" />
     </modules>
