@@ -52,7 +52,7 @@ class Action<Params : ActionParams, Model : Any, UiModel : Any> private construc
      * @param owner for [liveData]
      * @param body  the function that will use for handle the result
      */
-    fun observe(owner: LifecycleOwner, body: (UiModel?) -> Unit) {
+    fun observe(owner: LifecycleOwner, body: (UiModel) -> Unit) {
         liveData.observe(owner, Observer(body))
 
     }
@@ -63,7 +63,7 @@ class Action<Params : ActionParams, Model : Any, UiModel : Any> private construc
      * @param owner for [failureLiveData]
      * @param body  the function that will use for handle the failure
      */
-    fun observeFailure(owner: LifecycleOwner, body: (Failure?) -> Unit) {
+    fun observeFailure(owner: LifecycleOwner, body: (Failure) -> Unit) {
         failureLiveData.observe(owner, Observer(body))
 
     }
@@ -74,7 +74,7 @@ class Action<Params : ActionParams, Model : Any, UiModel : Any> private construc
      * @param owner for [loadingLiveData]
      * @param body  the function that will use for handle the loading
      */
-    fun observeLoadingStatus(owner: LifecycleOwner, body: (Boolean?) -> Unit) {
+    fun observeLoadingStatus(owner: LifecycleOwner, body: (Boolean) -> Unit) {
         loadingLiveData.observe(owner, Observer(body))
 
     }
