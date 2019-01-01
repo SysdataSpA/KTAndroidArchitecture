@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 package it.sysdata.ktandroidarchitecturecore.interactor
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
 import it.sysdata.ktandroidarchitecturecore.functional.Either
 
@@ -52,29 +52,47 @@ class Action<Params : ActionParams, Model : Any, UiModel : Any> private construc
      * @param owner for [liveData]
      * @param body  the function that will use for handle the result
      */
-    fun observe(owner: LifecycleOwner, body: (UiModel?) -> Unit) {
+    fun observe(owner: LifecycleOwner, body: (UiModel) -> Unit) {
         liveData.observe(owner, Observer(body))
 
     }
+    /**
+     * Define the function that will use for handle the result without model
+     *
+     * @param owner for [liveData]
+     * @param body  the function that will use for handle the result
+     */
+    fun observeWithoutModel(owner: LifecycleOwner, body: () -> Unit) {
+        liveData.observe(owner, Observer { body.invoke() })
 
+    }
     /**
      * Define the function that will use for handle the failure
      *
      * @param owner for [failureLiveData]
      * @param body  the function that will use for handle the failure
      */
-    fun observeFailure(owner: LifecycleOwner, body: (Failure?) -> Unit) {
+    fun observeFailure(owner: LifecycleOwner, body: (Failure) -> Unit) {
         failureLiveData.observe(owner, Observer(body))
 
     }
+    /**
+     * Define the function that will use for handle the failure without type of Failure
+     *
+     * @param owner for [failureLiveData]
+     * @param body  the function that will use for handle the failure
+     */
+    fun observeFailureWithoutType(owner: LifecycleOwner, body: () -> Unit) {
+        failureLiveData.observe(owner, Observer {body.invoke()})
 
+    }
     /**
      * Define the function that will use for handle the loading
      *
      * @param owner for [loadingLiveData]
      * @param body  the function that will use for handle the loading
      */
-    fun observeLoadingStatus(owner: LifecycleOwner, body: (Boolean?) -> Unit) {
+    fun observeLoadingStatus(owner: LifecycleOwner, body: (Boolean) -> Unit) {
         loadingLiveData.observe(owner, Observer(body))
 
     }

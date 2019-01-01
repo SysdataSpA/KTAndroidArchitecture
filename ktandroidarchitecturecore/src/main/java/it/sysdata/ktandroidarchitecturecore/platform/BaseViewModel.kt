@@ -15,7 +15,7 @@
  */
 package it.sysdata.ktandroidarchitecturecore.platform
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 
 /**
  * Base ViewModel class.
