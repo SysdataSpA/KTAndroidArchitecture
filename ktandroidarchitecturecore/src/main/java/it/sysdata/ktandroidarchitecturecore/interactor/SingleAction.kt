@@ -23,12 +23,12 @@ import it.sysdata.ktandroidarchitecturecore.functional.Either
 import it.sysdata.ktandroidarchitecturecore.platform.SingleLiveEvent
 
 /**
- * [ActionSingle] allow to define [UseCase] and [MutableLiveData] for handle the success, loading and failure case
+ * [SingleAction] allow to define [UseCase] and [MutableLiveData] for handle the success, loading and failure case
  *
  * of Use Case and it allow to set a function for mapping Model into UiModel
  *
  */
-class ActionSingle<Params : ActionParams, Model : Any, UiModel : Any> private constructor() {
+class SingleAction<Params : ActionParams, Model : Any, UiModel : Any> private constructor() {
 
     private val liveData = SingleLiveEvent<UiModel>()
     private val loadingLiveData = MutableLiveData<Boolean>()
@@ -142,14 +142,14 @@ class ActionSingle<Params : ActionParams, Model : Any, UiModel : Any> private co
     }
 
 
-    class ActionBuilderMappingUiModel<Params : ActionParams, Model : Any, UiModel : Any> internal constructor(private val action: ActionSingle<Params, Model, UiModel>) {
+    class ActionBuilderMappingUiModel<Params : ActionParams, Model : Any, UiModel : Any> internal constructor(private val action: SingleAction<Params, Model, UiModel>) {
         /**
-         * Set map function for [ActionSingle]
+         * Set map function for [SingleAction]
          * @param handleResult function for mapping Model to UiModel
          *
          * @return [Builder] instance
          */
-        fun buildWithUiModel(handleResult: (Model) -> UiModel): ActionSingle<Params, Model, UiModel> {
+        fun buildWithUiModel(handleResult: (Model) -> UiModel): SingleAction<Params, Model, UiModel> {
             action.mappingFunction = handleResult
             return action
 
@@ -160,13 +160,13 @@ class ActionSingle<Params : ActionParams, Model : Any, UiModel : Any> private co
 
 
     /**
-     * Use this class for create a instance of [ActionSingle]
+     * Use this class for create a instance of [SingleAction]
      */
     class Builder<Params : ActionParams, Model : Any, UiModel : Any> {
-        private val action = ActionSingle<Params, Model, UiModel>()
+        private val action = SingleAction<Params, Model, UiModel>()
 
         /**
-         * Set use case for [ActionSingle]
+         * Set use case for [SingleAction]
          * @param useCaseClass Java class of use case
          *
          * @return [ActionBuilderMappingUiModel] instance
@@ -178,7 +178,7 @@ class ActionSingle<Params : ActionParams, Model : Any, UiModel : Any> private co
         }
 
         /**
-         * Set use case for [ActionSingle]
+         * Set use case for [SingleAction]
          * @param run function for Action
          *
          * @return [ActionBuilderMappingUiModel] instance
@@ -193,7 +193,7 @@ class ActionSingle<Params : ActionParams, Model : Any, UiModel : Any> private co
         }
 
         /**
-         * Set use case for [ActionSingle]
+         * Set use case for [SingleAction]
          * @param useCase the instance of useCase
          *
          * @return [ActionBuilderMappingUiModel] instance

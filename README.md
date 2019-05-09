@@ -8,7 +8,7 @@ CHANGELOG:
 1.0.1 
 - fixed abnormal behavior on ActionQueue.
 - Added the possibility to add the action instance instead of the class. This is useful for dependency injection (i.e. Dagger).
-- Added ActionSingle.
+- Added SingleAction.
 - fixed the behavior of the error post in the observeFailure function.
 - Updated Gradle plugin version.
 
@@ -135,7 +135,7 @@ Into an **ActionQueue** each **UseCase**, except the first, take the result of t
 
 **Action**
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionSingleUseCase.png "Action")
+![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/SingleActionUseCase.png "Action")
 
 ```kotlin
 val actionLogin = Action.Builder<ActionParams,Model,UiModel>()

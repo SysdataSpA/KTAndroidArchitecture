@@ -46,8 +46,6 @@ class Action<Params : ActionParams, Model : Any, UiModel : Any> private construc
      */
     fun execute(params: Params) {
         lastParams = params
-//        loadingLiveData.postValue(true)
-        // TODO to check modify
         loadingLiveData.value = true
         uc.execute({ it.either(::handleFailure, ::handleSuccess) }, params)
     }

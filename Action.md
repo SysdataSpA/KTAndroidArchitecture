@@ -19,9 +19,9 @@ To execute a **ActionQueue** as for the **Action** we have to link it to an inte
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/usecase_documentation/action_queue_execute.png "ActionQueue")
 
-### 1.3 What is an ActionSingle
+### 1.3 What is an SingleAction
 
-An **ActionSingle** is an object which handles the process of calling a [**UseCase**](UseCase.md) and map the response.
+An **SingleAction** is an object which handles the process of calling a [**UseCase**](UseCase.md) and map the response.
 
 This avoids a common problem with events: on configuration change (like rotation) an update
 
@@ -58,10 +58,10 @@ val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
         .setLastUseCase(...)
 ```
 
-Below an example of ActionSingle
+Below an example of SingleAction
 
 ```kotlin
-val redoOrderAction = ActionSingle.Builder<RedoOrderActionParams, RedoOrderActionResult, RedoOrderActionResult>()
+val redoOrderAction = SingleAction.Builder<RedoOrderActionParams, RedoOrderActionResult, RedoOrderActionResult>()
             .useCase(redoOrderUsecase)
             .buildWithUiModel { it }
 ```
