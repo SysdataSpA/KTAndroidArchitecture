@@ -3,15 +3,6 @@ A Kotlin android architecture with Google Architecture Components
 ## 1. A Brief Introduciton
 The app is a sample project that shows how to implement the KTAndroidArchitecture into your Android app.
 
-CHANGELOG:
-
-1.0.1 
-- fixed abnormal behavior on ActionQueue.
-- Added the possibility to add the action instance instead of the class. This is useful for dependency injection (i.e. Dagger).
-- Added ActionSingle.
-- fixed the behavior of the error post in the observeFailure function.
-- Updated Gradle plugin version.
-
 ### 1.1 What is KTAndroidArchitecture?
 It is a layer-based architecture that allows a real disentangle of the UI components from the business logic. 
 
@@ -153,6 +144,15 @@ val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
         .addUseCase(...)
         .setLastUseCase(...)
 ```
+
+## CHANGELOG ##
+
+**1.0.1**
+- fixed abnormal behavior on ActionQueue.
+- Added the possibility to add the action instance instead of the class. This is useful for dependency injection (i.e. Dagger).
+- Added ActionSingle.
+- fixed the behavior of the error post in the observeFailure function.
+- Updated Gradle plugin version.
 
 # License
 
