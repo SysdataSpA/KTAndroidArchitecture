@@ -1,17 +1,18 @@
 package com.sysdata.kt.ktandroidarchitecture.ui
 
-import android.app.Activity
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
+import androidx.paging.PagedList
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sysdata.kt.ktandroidarchitecture.R
 import com.sysdata.kt.ktandroidarchitecture.repository.model.UIUserLogged
-import com.sysdata.kt.ktandroidarchitecture.repository.model.UserLogged
 import com.sysdata.kt.ktandroidarchitecture.usecase.LoginActionParams
 import com.sysdata.kt.ktandroidarchitecture.viewmodel.LoginViewModel
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
 
     private var viewModel : LoginViewModel? = null
+    private var adapter: PagedListAdapterImpl? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,24 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
 
         viewModel?.actionLogin?.observe(this, ::onUserLoggged)
         viewModel?.actionLogin?.observeFailure(this, ::onLoginFailed)
+
+
+        viewModel?.channelNotes?.initDatasource(listOf(Note(), Note(), Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note()))
+
+        adapter = PagedListAdapterImpl {
+            Toast.makeText(this, "note : $it", Toast.LENGTH_SHORT).show()
+        }
+
+        recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        recycler_view.adapter = adapter
+
+        viewModel?.channelNotes?.observe(this,::onPostNote)
+    }
+
+    private fun onPostNote(list: PagedList<Note>?) {
+        list?.let {
+            adapter?.submitList(list)
+        }
     }
 
     private fun onLoginFailed(failure: Failure?) {

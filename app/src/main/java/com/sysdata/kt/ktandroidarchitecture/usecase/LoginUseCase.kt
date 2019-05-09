@@ -5,7 +5,6 @@ import com.sysdata.kt.ktandroidarchitecture.repository.model.UserLogged
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
 import it.sysdata.ktandroidarchitecturecore.functional.Either
 import it.sysdata.ktandroidarchitecturecore.interactor.UseCase
-import kotlinx.coroutines.experimental.delay
 
 class LoginUseCase: UseCase<UserLogged, LoginActionParams>() {
     override suspend fun run(params: LoginActionParams): Either<Failure, UserLogged> {
