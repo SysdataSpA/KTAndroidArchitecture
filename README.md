@@ -3,6 +3,18 @@ A Kotlin android architecture with Google Architecture Components
 ## 1. A Brief Introduciton
 The app is a sample project that shows how to implement the KTAndroidArchitecture into your Android app.
 
+<<<<<<< HEAD
+CHANGELOG:
+
+1.0.1 
+- fixed abnormal behavior on ActionQueue.
+- Added the possibility to add the action instance instead of the class. This is useful for dependency injection (i.e. Dagger).
+- Added SingleAction.
+- fixed the behavior of the error post in the observeFailure function.
+- Updated Gradle plugin version.
+
+=======
+>>>>>>> 707078fb6d64d589a192b93396f8080a41183eac
 ### 1.1 What is KTAndroidArchitecture?
 It is a layer-based architecture that allows a real disentangle of the UI components from the business logic. 
 
@@ -126,7 +138,7 @@ Into an **ActionQueue** each **UseCase**, except the first, take the result of t
 
 **Action**
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionSingleUseCase.png "Action")
+![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/SingleActionUseCase.png "Action")
 
 ```kotlin
 val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
@@ -145,9 +157,18 @@ val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
         .setLastUseCase(...)
 ```
 
+## CHANGELOG ##
+
+**1.0.1**
+- fixed abnormal behavior on ActionQueue.
+- Added the possibility to add the action instance instead of the class. This is useful for dependency injection (i.e. Dagger).
+- Added ActionSingle.
+- fixed the behavior of the error post in the observeFailure function.
+- Updated Gradle plugin version.
+
 # License
 
-      Copyright (C) 2017 Sysdata S.p.A.
+      Copyright (C) 2019 Sysdata S.p.A.
 
       Licensed under the Apache License, Version 2.0 (the "License");
       you may not use this file except in compliance with the License.

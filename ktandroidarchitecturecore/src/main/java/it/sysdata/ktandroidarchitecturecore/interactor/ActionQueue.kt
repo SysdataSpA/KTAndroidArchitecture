@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Sysdata S.p.a.
+ * Copyright (C) 2019 Sysdata S.p.a.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,6 +56,9 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
      * @param params for first use case
      */
     fun execute(params: Params) {
+        if (loadingLiveData.value == true) {
+            return
+        }
         val item = useCaseQueue.first()
         loadingLiveData.postValue(true)
         if (useCaseQueue.size == 1) //check if the first use case is the only use case (use normal Action for this case)
@@ -74,10 +77,13 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
 
         when {
             isLastAction -> {
-                lastUseCase.execute(::handleFailure, ::handleSuccess, model as Any)
-                resetQueue()
+                handleLastUseCase(model as Any)
             }
             model != null -> {
+                if (useCaseQueue.size == 1) {
+                    handleLastUseCase(model as Any)
+                    return
+                }
                 isLastAction = index + 1 == useCaseQueue.size
                 val item = useCaseQueue[index]
                 item.execute(::handleFailure, ::handleUseCase, model)
@@ -91,13 +97,21 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
         }
     }
 
+    private fun handleLastUseCase(model: Any) {
+        isLastAction = true
+        lastUseCase.execute(::handleFailure, ::handleSuccess, model)
+        resetQueue()
+    }
+
     private fun resetQueue() {
         isLastAction = false
         index = 1
     }
+
     private fun handleFailure(fail: Failure) {
         loadingLiveData.postValue(false)
         failureLiveData.postValue(fail)
+        resetQueue()
     }
 
 
@@ -118,6 +132,7 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
         liveData.observe(owner, Observer(body))
 
     }
+
     /**
      * Define the function that will use for handle the result without model
      *
@@ -128,6 +143,18 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
         liveData.observe(owner, Observer { body.invoke() })
 
     }
+
+    /**
+     * Define the function that will use for handle the failure without type of Failure
+     *
+     * @param owner for [failureLiveData]
+     * @param body  the function that will use for handle the failure
+     */
+    fun observeFailureWithoutType(owner: LifecycleOwner, body: () -> Unit) {
+        failureLiveData.observe(owner, Observer { body.invoke() })
+
+    }
+
     /**
      * Define the function that will use for handle the failure
      *
@@ -138,16 +165,7 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
         failureLiveData.observe(owner, Observer(body))
 
     }
-    /**
-     * Define the function that will use for handle the failure without type of Failure
-     *
-     * @param owner for [failureLiveData]
-     * @param body  the function that will use for handle the failure
-     */
-    fun observeFailureWithoutType(owner: LifecycleOwner, body: () -> Unit) {
-        failureLiveData.observe(owner, Observer {body.invoke()})
 
-    }
     /**
      * Define the function that will use for handle the loading
      *
@@ -159,7 +177,10 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
 
     }
 
-    class ActionQueueItem<Params : ActionParams, out Model : Any, OldModel : Any> internal constructor(private val useCase: UseCase<Model, Params>, private val handleMapping: ((OldModel) -> Params)? = null) {
+    class ActionQueueItem<Params : ActionParams, out Model : Any, OldModel : Any> internal constructor(
+            private val useCase: UseCase<Model, Params>,
+            private val handleMapping: ((OldModel) -> Params)? = null
+    ) {
 
 
         @Suppress("UNCHECKED_CAST")
@@ -168,7 +189,6 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
                 useCase.execute({ it.either(handleFailure, handleSuccess) }, handleMapping!!(model as OldModel))
 
             } catch (e: Exception) {
-                // catch internal error
                 handleFailure.invoke(Failure.InternalError(e.message))
             }
         }
@@ -179,7 +199,6 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
                 useCase.execute({ it.either(handleFailure, handleSuccess) }, params as Params)
 
             } catch (e: Exception) {
-                // catch internal error
                 handleFailure.invoke(Failure.InternalError(e.message))
 
             }
@@ -188,7 +207,9 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
     }
 
 
-    class ActionQueueBuilderMappingUiModel<Params : ActionParams, UiModel : Any, Model : Any> internal constructor(private val actionQueue: ActionQueue<Params, UiModel, Model>) {
+    class ActionQueueBuilderMappingUiModel<Params : ActionParams, UiModel : Any, Model : Any> internal constructor(
+            private val actionQueue: ActionQueue<Params, UiModel, Model>
+    ) {
         /**
          * Set map function for [ActionQueue]
          * @param handleResult function for mapping Model to UiModel
@@ -216,8 +237,32 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
          */
 
 
-        fun <Model : Any, ParamsUseCase : ActionParams, T : UseCase<Model, ParamsUseCase>> addUseCase(useCaseClass: Class<T>, mapping: (OldModel) -> ParamsUseCase): ActionQueueBuilderUseCase<Params, UiModel, Model> {
+        fun <Model : Any, ParamsUseCase : ActionParams, T : UseCase<Model, ParamsUseCase>> addUseCase(
+                useCaseClass: Class<T>,
+                mapping: (OldModel) -> ParamsUseCase
+        ): ActionQueueBuilderUseCase<Params, UiModel, Model> {
             actionQueue.useCaseQueue.add(ActionQueueItem(useCaseClass.newInstance(), mapping))
+
+            return ActionQueueBuilderUseCase(actionQueue)
+
+        }
+
+        /**
+         * Add a use case that will execute after previous use case
+         *
+         *
+         * @param useCaseClass instance of use case
+         * @param mapping function that mapping previous model use case result with params for this
+         * use case
+         * @return [Builder] instance
+         */
+
+
+        fun <Model : Any, ParamsUseCase : ActionParams, T : UseCase<Model, ParamsUseCase>> addUseCase(
+                useCaseClass: T,
+                mapping: (OldModel) -> ParamsUseCase
+        ): ActionQueueBuilderUseCase<Params, UiModel, Model> {
+            actionQueue.useCaseQueue.add(ActionQueueItem(useCaseClass, mapping))
 
             return ActionQueueBuilderUseCase(actionQueue)
 
@@ -234,7 +279,10 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
          * @return [Builder] instance
 
          */
-        fun <Model : Any, ParamsUseCase : ActionParams> addUseCase(run: (ParamsUseCase) -> Either<Failure, Model>, mapping: (OldModel) -> ParamsUseCase): ActionQueueBuilderUseCase<Params, UiModel, Model> {
+        fun <Model : Any, ParamsUseCase : ActionParams> addUseCase(
+                run: (ParamsUseCase) -> Either<Failure, Model>,
+                mapping: (OldModel) -> ParamsUseCase
+        ): ActionQueueBuilderUseCase<Params, UiModel, Model> {
             val useCase = object : UseCase<Model, ParamsUseCase>() {
                 override suspend fun run(params: ParamsUseCase): Either<Failure, Model> {
                     return run.invoke(params)
@@ -259,10 +307,38 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
          */
 
 
-        fun <ParamsUseCase : ActionParams, Model : Any, T : UseCase<Model, ParamsUseCase>> setLastUseCase(useCaseClass: Class<T>, mapping: (OldModel) -> ParamsUseCase): ActionQueueBuilderMappingUiModel<Params, UiModel, Model> {
+        fun <ParamsUseCase : ActionParams, Model : Any, T : UseCase<Model, ParamsUseCase>> setLastUseCase(
+                useCaseClass: Class<T>,
+                mapping: (OldModel) -> ParamsUseCase
+        ): ActionQueueBuilderMappingUiModel<Params, UiModel, Model> {
             val finalActionQueue = ActionQueue<Params, UiModel, Model>()
 
             finalActionQueue.lastUseCase = ActionQueueItem(useCaseClass.newInstance(), mapping)
+            finalActionQueue.useCaseQueue.addAll(actionQueue.useCaseQueue)
+
+            return ActionQueueBuilderMappingUiModel(finalActionQueue)
+        }
+
+        /**
+         * Set the last use case that will execute with the function define in [mappingFunction]
+         *
+         *
+         * @param useCaseClass instance of use case
+         * @param mapping function that mapping previous model use case result with params for this
+         * use case
+         *
+         * @return [Builder] instance
+
+         */
+
+
+        fun <ParamsUseCase : ActionParams, Model : Any, T : UseCase<Model, ParamsUseCase>> setLastUseCase(
+                useCaseClass: T,
+                mapping: (OldModel) -> ParamsUseCase
+        ): ActionQueueBuilderMappingUiModel<Params, UiModel, Model> {
+            val finalActionQueue = ActionQueue<Params, UiModel, Model>()
+
+            finalActionQueue.lastUseCase = ActionQueueItem(useCaseClass, mapping)
             finalActionQueue.useCaseQueue.addAll(actionQueue.useCaseQueue)
 
             return ActionQueueBuilderMappingUiModel(finalActionQueue)
@@ -279,7 +355,10 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
          * @return [ActionQueueBuilder] instance
 
          */
-        fun <Model : Any, ParamsUseCase : ActionParams> setLastUseCase(run: (ParamsUseCase) -> Either<Failure, Model>, mapping: (OldModel) -> ParamsUseCase): ActionQueueBuilderMappingUiModel<Params, UiModel, Model> {
+        fun <Model : Any, ParamsUseCase : ActionParams> setLastUseCase(
+                run: (ParamsUseCase) -> Either<Failure, Model>,
+                mapping: (OldModel) -> ParamsUseCase
+        ): ActionQueueBuilderMappingUiModel<Params, UiModel, Model> {
             val useCase = object : UseCase<Model, ParamsUseCase>() {
                 override suspend fun run(params: ParamsUseCase): Either<Failure, Model> {
                     return run.invoke(params)
@@ -318,6 +397,20 @@ class ActionQueue<Params : ActionParams, UiModel : Any, LastModel : Any> private
 
         fun <Model : Any, T : UseCase<Model, Params>> setFirstUseCase(useCaseClass: Class<T>): ActionQueueBuilderUseCase<Params, UiModel, Model> {
             actionQueue.useCaseQueue.add(0, ActionQueueItem<Params, Model, Model>(useCaseClass.newInstance()))
+
+            return ActionQueueBuilderUseCase(actionQueue)
+        }
+
+        /**
+         * Set the first use case that will execute
+         *
+         *
+         * @param useCaseClass java class of use case
+         * use case
+         * @return [Builder] instance
+         */
+        fun <Model : Any, T : UseCase<Model, Params>> setFirstUseCase(useCaseClass: T): ActionQueueBuilderUseCase<Params, UiModel, Model> {
+            actionQueue.useCaseQueue.add(0, ActionQueueItem<Params, Model, Model>(useCaseClass))
 
             return ActionQueueBuilderUseCase(actionQueue)
         }
