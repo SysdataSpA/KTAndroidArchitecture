@@ -15,6 +15,9 @@ The main components are:
 * [Repository](Repository.md)
 * [Action](Action.md)
 
+Here you can find a list of guides depending on your implementations :
+* [DI - Use with Dagger](DI-Dagger.md)
+
 ## 2&#46; How to use it?
 
 ### 2.1 Import dependency
@@ -25,7 +28,7 @@ The main components are:
 ```
 #### 2.1.2 in your **App level `build.gradle`** add this dependecy
 ```gradle
-    implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.0'
+    implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.1'
 ```
 
 ### 2.2 Create a Repository
@@ -126,7 +129,7 @@ Into an **ActionQueue** each **UseCase**, except the first, take the result of t
 
 **Action**
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionSingleUseCase.png "Action")
+![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/SingleActionUseCase.png "Action")
 
 ```kotlin
 val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
@@ -145,9 +148,18 @@ val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
         .setLastUseCase(...)
 ```
 
+## CHANGELOG ##
+
+**1.0.1**
+- fixed abnormal behavior on ActionQueue.
+- Added the possibility to add the action instance instead of the class. This is useful for dependency injection (i.e. Dagger).
+- Added ActionSingle.
+- fixed the behavior of the error post in the observeFailure function.
+- Updated Gradle plugin version.
+
 # License
 
-      Copyright (C) 2017 Sysdata S.p.A.
+      Copyright (C) 2019 Sysdata S.p.A.
 
       Licensed under the Apache License, Version 2.0 (the "License");
       you may not use this file except in compliance with the License.
