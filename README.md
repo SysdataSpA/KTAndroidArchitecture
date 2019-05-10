@@ -28,7 +28,7 @@ Here you can find a list of guides depending on your implementations :
 ```
 #### 2.1.2 in your **App level `build.gradle`** add this dependecy
 ```gradle
-    implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.0'
+    implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.1'
 ```
 
 ### 2.2 Create a Repository
