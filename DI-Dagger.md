@@ -80,8 +80,8 @@ class AuthenticationRepo @Inject constructor() {
 #### 1.2.5 You are now ready to use your view model inside your Activity/Fragment by injecting the ViewModelFactory and lazy initializing it.
 ```kotlin
 @Inject
-    lateinit var factory: ViewModelFactory
-    private val viewModel: SampleViewModel by lazy {
-        ViewModelProviders.of(this, factory).get(SampleViewModel::class.java)
-    }
+lateinit var factory: ViewModelFactory
+private val viewModel: SampleViewModel by lazy {
+    ViewModelProviders.of(this, factory).get(SampleViewModel::class.java)
+}
 ```
