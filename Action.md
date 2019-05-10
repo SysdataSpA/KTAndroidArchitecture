@@ -19,7 +19,24 @@ To execute a **ActionQueue** as for the **Action** we have to link it to an inte
 
 ![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/usecase_documentation/action_queue_execute.png "ActionQueue")
 
-### 1.3 Sample
+### 1.3 What is an SingleAction
+
+An **SingleAction** is an object which handles the process of calling a [**UseCase**](UseCase.md) and map the response.
+
+This avoids a common problem with events: on configuration change (like rotation) an update
+
+can be emitted if the observer is active. This LiveData only calls the observable if there's an
+
+explicit call to setValue() or call().
+
+Note that only one observer is going to be notified of changes.
+
+When the interaction happens UseCase is executed and the result is mapped and passed to the **ViewModel**.
+
+[alt_text] (https://github.com/googlesamples/android-architecture/blob/dev-todo-mvvm-live/todoapp/app/src/main/java/com/example/android/architecture/blueprints/todoapp/SingleLiveEvent.java "SingleLiveEvent")
+
+
+### 1.4 Sample
 
 Below an example of Action
 
@@ -41,3 +58,10 @@ val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
         .setLastUseCase(...)
 ```
 
+Below an example of SingleAction
+
+```kotlin
+val redoOrderAction = SingleAction.Builder<RedoOrderActionParams, RedoOrderActionResult, RedoOrderActionResult>()
+            .useCase(redoOrderUsecase)
+            .buildWithUiModel { it }
+```
