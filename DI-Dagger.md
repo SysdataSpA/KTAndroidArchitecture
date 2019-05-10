@@ -1,11 +1,11 @@
 # DI - Use with Dagger
 A Kotlin android architecture with Google Architecture Components
 
-## 1; How to use it?
+## 1 How to use it?
 
 ### 1.1 Import dependency
 
-#### 1.1.1 in **app level `build.gradle`** add these dependencies that will be needed to add Dagger and thus Dependency injection.
+In **app level `build.gradle`** add these dependencies that will be needed to add Dagger and thus Dependency injection.
 ```gradle
        // dagger2 android
        kapt "com.google.dagger:dagger-android-processor:$dagger_version"
@@ -14,7 +14,7 @@ A Kotlin android architecture with Google Architecture Components
        kapt "com.google.dagger:dagger-compiler:$dagger_version"
 ```
 ### 1.2 Basic implementation steps
-#### 1.2.1 Define a ViewModelFactory that will injext ViewModel providers as soon as they will be needed and will add them to a map so they are as singleton instances. You will have to add all the ViewModels you create to this map and to the constructor.
+Define a ViewModelFactory that will inject ViewModel providers as soon as they will be needed and will add them to a map so they are as singleton instances. You will have to add all the ViewModels you create to this map and to the constructor.
 ```kotlin
 @Singleton
 class ViewModelFactory @Inject constructor(application: Application
@@ -38,7 +38,8 @@ class ViewModelFactory @Inject constructor(application: Application
     }
 }
 ```
-#### 1.2.2 Define an application component that will provide the created ViewModelFactory.
+
+Define an application component that will provide the created ViewModelFactory.
 ```kotlin
 @Singleton
 @Component(modules = [AndroidSupportInjectionModule::class])
@@ -46,7 +47,8 @@ interface ApplicationComponent : AndroidInjector<DaggerApplication> {
     fun getViewModelFactory(): ViewModelFactory
 }
 ```
-#### 1.2.3 Define a ViewModel. By using Dagger, you can create the instance of the view model through the @Inject annotation. Moreover, usecases will be injected instead of being instantiated through reflection.
+
+Define a ViewModel. By using Dagger, you can create the instance of the view model through the @Inject annotation. Moreover, usecases will be injected instead of being instantiated through reflection.
 
 ```kotlin
 class SampleViewModel @Inject constructor(sampleUsecase: SampleUsecase
@@ -60,7 +62,7 @@ class SampleViewModel @Inject constructor(sampleUsecase: SampleUsecase
 }
 ```
 
-#### 1.2.4 UseCases are written in a similar way: the only difference is that we use the @Inject annotation here and we define our repositories as constructor parameters instead of creating them.
+UseCases are written in a similar way: the only difference is that we use the @Inject annotation here and we define our repositories as constructor parameters instead of creating them.
 ```kotlin
 class SampleUsecase @Inject constructor(
 // optional repo that you can add as constrtor parameters
@@ -77,7 +79,8 @@ class AuthenticationRepo @Inject constructor() {
     // define here your repository methods (DataBase calls, wev)
 }
 ```
-#### 1.2.5 You are now ready to use your view model inside your Activity/Fragment by injecting the ViewModelFactory and lazy initializing it.
+
+You are now ready to use your view model inside your Activity/Fragment by injecting the ViewModelFactory and lazy initializing it.
 ```kotlin
 @Inject
 lateinit var factory: ViewModelFactory
