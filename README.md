@@ -15,6 +15,9 @@ The main components are:
 * [Repository](Repository.md)
 * [Action](Action.md)
 
+Here you can find a list of guides depending on your implementations :
+* [DI - Use with Dagger](DI-Dagger)
+
 ## 2&#46; How to use it?
 
 ### 2.1 Import dependency
