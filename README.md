@@ -16,7 +16,7 @@ The main components are:
 * [Action](Action.md)
 
 Here you can find a list of guides depending on your implementations :
-* [DI - Use with Dagger](DI-Dagger)
+* [DI - Use with Dagger](DI-Dagger.md)
 
 ## 2&#46; How to use it?
 
