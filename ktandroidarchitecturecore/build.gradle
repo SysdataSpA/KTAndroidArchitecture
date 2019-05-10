@@ -4,7 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 // This is the library version used when deploying the artifact
-version = "1.0.0"
+version = "1.0.1"
 
 group = "it.sysdata.mobile"
 
@@ -78,7 +78,7 @@ ext {
     // GROUP_ID
     publishedGroupId = group
     // ARTIFACT_ID
-    artifact = 'KTAndroidArchitecture'
+    artifact = 'ktandroidarchitecturecore'
     // VERSION_ID
     libraryVersion = version
 
@@ -87,8 +87,8 @@ ext {
     developerEmail = properties.getProperty("bintray.developer.email")
 
     bintrayRepo = 'maven'
-    bintrayName = 'KTAndroidArchitecture'
-    libraryName = 'KTAndroidArchitecture'
+    bintrayName = 'ktandroidarchitecturecore'
+    libraryName = 'ktandroidarchitecturecore'
     bintrayOrganization = 'sysdata'
 }
 
