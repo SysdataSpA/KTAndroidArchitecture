@@ -5,17 +5,18 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sysdata.kt.ktandroidarchitecture.R
 import com.sysdata.kt.ktandroidarchitecture.repository.model.UIUserLogged
 import com.sysdata.kt.ktandroidarchitecture.usecase.LoginActionParams
 import com.sysdata.kt.ktandroidarchitecture.viewmodel.LoginViewModel
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
+import it.sysdata.ktandroidarchitecturecore.interactor.DataSourceChannel
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
@@ -41,16 +42,26 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
         viewModel?.actionLogin?.observeFailure(this, ::onLoginFailed)
 
 
-        viewModel?.channelNotes?.initDatasource(listOf(Note(), Note(), Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note()))
-
-        adapter = PagedListAdapterImpl {
-            Toast.makeText(this, "note : $it", Toast.LENGTH_SHORT).show()
+        viewModel?.channelNotes?.let {
+            if(it is DataSourceChannel<*, *>){
+                it as DataSourceChannel<*, Note>
+                it.initDatasource(listOf(Note(), Note(), Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note()))
+            }
         }
 
-        recycler_view.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        adapter = PagedListAdapterImpl {
+            viewModel?.channelPostNotes?.postData(it)
+        }
+
+        recycler_view.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recycler_view.adapter = adapter
 
         viewModel?.channelNotes?.observe(this,::onPostNote)
+        viewModel?.channelPostNotes?.observe(this, ::onReceivePost)
+    }
+
+    private fun onReceivePost(note: Note?) {
+        Toast.makeText(this, "note : $note", Toast.LENGTH_SHORT).show()
     }
 
     private fun onPostNote(list: PagedList<Note>?) {

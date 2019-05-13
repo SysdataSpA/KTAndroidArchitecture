@@ -9,11 +9,6 @@ open class BasePositionalDatasource<Data : Any>: PositionalDataSource<Data>(){
     private lateinit var datas: List<Data>
     private var currentPosition: Int = 0
 
-    fun initDataSource(datas: List<Data>, defaultLoadSize: Int? = null){
-        this.datas = datas
-        this.defaultLoadSize = defaultLoadSize
-    }
-
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<Data>) {
         val loadSize = params.loadSize
         val startPosition = params.startPosition
@@ -55,5 +50,10 @@ open class BasePositionalDatasource<Data : Any>: PositionalDataSource<Data>(){
         val endIndex = if (startPosition + defaultLoadSize <= datas.size) startPosition + defaultLoadSize else datas.size - 1
         currentPosition = endIndex
         return datas.subList(startPosition, endIndex)
+    }
+
+    fun init(datas: List<Data>, pageSize: Int) {
+        this.datas = datas
+        this.defaultLoadSize = pageSize
     }
 }
