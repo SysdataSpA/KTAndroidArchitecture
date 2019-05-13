@@ -37,7 +37,7 @@ open class BasePositionalDatasource<Data : Any>: PositionalDataSource<Data>(){
         }
         val subList = getSubList(startPosition, requestedLoadSize)
         if(placeholdersEnabled){
-            callback.onResult(subList, startPosition, requestedLoadSize)
+            callback.onResult(subList, startPosition, datas.size)
         } else {
             callback.onResult(subList, startPosition)
         }

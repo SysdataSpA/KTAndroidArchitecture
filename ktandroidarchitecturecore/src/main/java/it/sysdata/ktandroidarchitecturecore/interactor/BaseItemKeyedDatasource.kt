@@ -56,7 +56,7 @@ open class BaseItemKeyedDatasource<Key:Any, Data : Any>: ItemKeyedDataSource<Key
         val subList = getSubList(startPosition, requestedLoadSize)
 
         if (placeholdersEnabled) {
-            callback.onResult(subList, startPosition, requestedLoadSize)
+            callback.onResult(subList, startPosition, datas.size)
         } else {
             callback.onResult(subList)
         }

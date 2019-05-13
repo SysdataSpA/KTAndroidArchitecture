@@ -47,7 +47,7 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
                 // TODO: check this code, the cast is unsafe
                 it as DataSourceChannel<*, Note>
                 val notes = mutableListOf<Note>()
-                for(i in 0 until 32){
+                for(i in 0 until 500){
                     notes.add(Note(i))
                 }
                 it.initDatasource(notes)
