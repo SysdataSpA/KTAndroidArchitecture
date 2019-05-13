@@ -32,7 +32,7 @@ open class Channel<Data>{
      * Define the function that will use for handle the data posted by the channel
      *
      * @param owner for [liveData]
-     * @param body  the function that will use for handle the result
+     * @param body  the function that will use for handle the data posted by the channel
      */
     fun observe(owner: LifecycleOwner, body: (Data?) -> Unit) {
         liveData.observe(owner, Observer(body))

@@ -3,7 +3,7 @@ package com.sysdata.kt.ktandroidarchitecture.ui
 import androidx.recyclerview.widget.DiffUtil
 import java.util.*
 
-data class Note(val noteId: String = UUID.randomUUID().toString()) {
+data class Note(val index:Int, val noteId: String = UUID.randomUUID().toString()) {
     companion object {
         val DiffCallback = object : DiffUtil.ItemCallback<Note>() {
             override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean

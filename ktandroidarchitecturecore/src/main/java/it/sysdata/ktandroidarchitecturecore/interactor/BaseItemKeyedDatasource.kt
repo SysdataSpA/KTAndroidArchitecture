@@ -6,7 +6,7 @@ import androidx.paging.*
 open class BaseItemKeyedDatasource<Key:Any, Data : Any>: ItemKeyedDataSource<Key, Data>(){
 
     private var defaultLoadSize: Int? = null
-    private lateinit var datas: List<Data>
+    protected lateinit var datas: List<Data>
 
     override fun loadAfter(params: LoadParams<Key>, callback: LoadCallback<Data>) {
 
@@ -63,7 +63,7 @@ open class BaseItemKeyedDatasource<Key:Any, Data : Any>: ItemKeyedDataSource<Key
     }
 
     // Override this method to use another key
-    private fun getItemForKey(key: Key):Data{
+    protected open fun getItemForKey(key: Key):Data{
         return datas.first { it.hashCode() == key.hashCode() }
     }
 

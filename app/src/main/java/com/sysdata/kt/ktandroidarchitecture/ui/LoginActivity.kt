@@ -44,8 +44,13 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
 
         viewModel?.channelNotes?.let {
             if(it is DataSourceChannel<*, *>){
+                // TODO: check this code, the cast is unsafe
                 it as DataSourceChannel<*, Note>
-                it.initDatasource(listOf(Note(), Note(), Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note(),Note()))
+                val notes = mutableListOf<Note>()
+                for(i in 0 until 32){
+                    notes.add(Note(i))
+                }
+                it.initDatasource(notes)
             }
         }
 

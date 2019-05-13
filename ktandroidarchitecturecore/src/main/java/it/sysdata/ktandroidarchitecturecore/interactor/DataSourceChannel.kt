@@ -24,25 +24,46 @@ import androidx.paging.PagedList
 /**
  * [DataSourceChannel] allow to define [Datasource] and [MutableLiveData] for handle the success, loading and failure case
  *
- * of Use Case and it allow to set a function for mapping Model into UiModel
  *
  */
 class DataSourceChannel<Key: Any, Data>: Channel<PagedList<Data>>(){
 
     private lateinit var dataSource: DataSource<Key, Data>
 
-    fun initDatasource(datas: List<Data>, pageSize: Int = datas.size / 4, initialLoadSizeHint: Int = pageSize * 2, placeHolderEnabled: Boolean = false){
+    /**
+     *
+     * This method is used to initialize the datasource associated with the channel
+     * and the live data for the paged lists associated with the datasource
+     *
+     * @param datas List<Data>, list of datas used as dataset of the datasource,
+     *                          if your datasource doesn't need an initial dataset don't set this parameter and set the pagesize
+     * @param pageSize Int, size of the page to load
+     * @param initialLoadSizeHint Int, size of the initial page
+     * @param placeHolderEnabled Boolean
+     */
+    fun initDatasource(datas: List<Data>? = null, pageSize: Int = (datas?.size ?: 0) / 4, initialLoadSizeHint: Int = pageSize * 2, placeHolderEnabled: Boolean = false){
         val dataSourceBase = dataSource
         this.liveData = initLiveData(dataSource, pageSize, initialLoadSizeHint, placeHolderEnabled)
         // TODO: check this
-        if (dataSourceBase is BasePositionalDatasource) {
-            dataSourceBase.init(datas, pageSize)
-        } else if(dataSourceBase is BaseItemKeyedDatasource){
-            dataSourceBase.init(datas, pageSize)
+        if (datas != null && datas.isNotEmpty()) {
+            if (dataSourceBase is BasePositionalDatasource) {
+                dataSourceBase.init(datas, pageSize)
+            } else if(dataSourceBase is BaseItemKeyedDatasource){
+                dataSourceBase.init(datas, pageSize)
+            }
         }
         this.liveData = initLiveData(dataSource, pageSize, initialLoadSizeHint, placeHolderEnabled)
     }
 
+    /**
+     * this method is used to create a livedata of paged list based on the channel's datasource
+     *
+     * @param dataSource DataSource<Key, Data>
+     * @param pageSize Int
+     * @param initialLoadSizeHint Int
+     * @param placeHolderEnabled Boolean
+     * @return LiveData<PagedList<Data>>
+     */
     private fun initLiveData(dataSource: DataSource<Key, Data>, pageSize: Int, initialLoadSizeHint: Int, placeHolderEnabled: Boolean): LiveData<PagedList<Data>> {
         val config = PagedList.Config.Builder()
                 .setPageSize(pageSize)
