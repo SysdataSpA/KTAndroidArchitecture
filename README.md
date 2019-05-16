@@ -90,7 +90,7 @@ An action has several methods like:
 - ``` action?.observeLoadingStatus(...) ```, this method observe the loading state of the operation; 
 - ``` action?.execute(...) ```, this method call the run function inside the usecase and execute the operation;
 
-To call an action you have to write thisù
+To call an action you have to write this
 ```kotlin
         viewModel?.action?.observe(this, ::onActionSuccess)
         viewModel?.action?.observeFailure(this, ::onActionFailed)
