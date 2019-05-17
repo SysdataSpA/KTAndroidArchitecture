@@ -1,4 +1,4 @@
-package it.sysdata.ktandroidarchitecturecore.interactor
+package it.sysdata.ktandroidarchitecturecore
 
 import androidx.paging.PositionalDataSource
 

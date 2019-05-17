@@ -20,6 +20,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import it.sysdata.ktandroidarchitecturecore.BaseItemKeyedDatasource
+import it.sysdata.ktandroidarchitecturecore.BasePositionalDatasource
 
 /**
  * [DataSourceChannel] allow to define [Datasource] and [MutableLiveData] for handle the success, loading and failure case

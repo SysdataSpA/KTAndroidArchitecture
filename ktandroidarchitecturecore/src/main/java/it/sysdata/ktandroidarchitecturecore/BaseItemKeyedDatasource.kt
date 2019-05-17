@@ -1,7 +1,6 @@
-package it.sysdata.ktandroidarchitecturecore.interactor
+package it.sysdata.ktandroidarchitecturecore
 
 import androidx.paging.*
-import androidx.recyclerview.widget.DiffUtil
 
 
 open class BaseItemKeyedDatasource<Key:Any, Data : Any>: ItemKeyedDataSource<Key, Data>(){
