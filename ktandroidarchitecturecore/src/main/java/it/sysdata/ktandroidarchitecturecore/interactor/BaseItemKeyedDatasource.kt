@@ -1,6 +1,7 @@
 package it.sysdata.ktandroidarchitecturecore.interactor
 
 import androidx.paging.*
+import androidx.recyclerview.widget.DiffUtil
 
 
 open class BaseItemKeyedDatasource<Key:Any, Data : Any>: ItemKeyedDataSource<Key, Data>(){
@@ -20,6 +21,10 @@ open class BaseItemKeyedDatasource<Key:Any, Data : Any>: ItemKeyedDataSource<Key
         val subList = getSubList(startPosition, requestedLoadSize)
 
         callback.onResult(subList)
+/*      TODO: check this code
+        owner.loadData(range, {
+            callback.onResult(it)
+        })*/
     }
 
     override fun loadBefore(params: LoadParams<Key>, callback: LoadCallback<Data>) {

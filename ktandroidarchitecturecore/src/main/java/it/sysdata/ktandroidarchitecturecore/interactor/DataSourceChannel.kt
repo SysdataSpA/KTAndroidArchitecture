@@ -44,15 +44,14 @@ class DataSourceChannel<Key: Any, Data>: Channel<PagedList<Data>>(){
     fun initDatasource(datas: List<Data>? = null, pageSize: Int = (datas?.size ?: 0) / 4, initialLoadSizeHint: Int = pageSize * 2, placeHolderEnabled: Boolean = false){
         val dataSourceBase = dataSource
         this.liveData = initLiveData(dataSource, pageSize, initialLoadSizeHint, placeHolderEnabled)
-        // TODO: check this
         if (datas != null && datas.isNotEmpty()) {
+            // TODO: check this
             if (dataSourceBase is BasePositionalDatasource) {
                 dataSourceBase.init(datas, pageSize)
             } else if(dataSourceBase is BaseItemKeyedDatasource){
                 dataSourceBase.init(datas, pageSize)
             }
         }
-        this.liveData = initLiveData(dataSource, pageSize, initialLoadSizeHint, placeHolderEnabled)
     }
 
     /**
@@ -78,6 +77,16 @@ class DataSourceChannel<Key: Any, Data>: Channel<PagedList<Data>>(){
         return LivePagedListBuilder<Key, Data>(dataSourceFactory, config).build()
     }
 
+    /**
+     * Use this class for create a instance of [Channel]
+     */
+    class ChannelBuilder<Key:Any, Data> internal constructor(private val channel: Channel<PagedList<Data>>) {
+
+        fun build(): DataSourceChannel<Key, Data> {
+            return channel as DataSourceChannel<Key, Data>
+        }
+    }
+
 
     /**
      * Use this class for create a instance of [DataSourceChannel]
@@ -85,11 +94,11 @@ class DataSourceChannel<Key: Any, Data>: Channel<PagedList<Data>>(){
     class Builder<Key:Any, Data> {
         lateinit var channel : DataSourceChannel<Key, Data>
 
-        fun <T> dataSource(dataSourceClass: Class<T>): ChannelBuilder<PagedList<Data>> where T : DataSource<Key, Data> {
+        fun <T> dataSource(dataSourceClass: Class<T>): ChannelBuilder<Key, Data> where T : DataSource<Key, Data> {
             return this.dataSource<T>(dataSourceClass.newInstance())
         }
 
-        fun <T> dataSource(dataSource: DataSource<Key, Data>): ChannelBuilder<PagedList<Data>> where T : DataSource<Key, Data> {
+        fun <T> dataSource(dataSource: DataSource<Key, Data>): ChannelBuilder<Key, Data> where T : DataSource<Key, Data> {
             channel = DataSourceChannel()
             channel.dataSource = dataSource
             return ChannelBuilder(channel)

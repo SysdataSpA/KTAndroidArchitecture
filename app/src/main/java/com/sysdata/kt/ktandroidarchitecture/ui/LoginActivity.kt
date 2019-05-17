@@ -42,17 +42,16 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
         viewModel?.actionLogin?.observeFailure(this, ::onLoginFailed)
 
 
-        viewModel?.channelNotes?.let {
-            if(it is DataSourceChannel<*, *>){
-                // TODO: check this code, the cast is unsafe
-                it as DataSourceChannel<*, Note>
-                val notes = mutableListOf<Note>()
-                for(i in 0 until 500){
-                    notes.add(Note(i))
-                }
-                it.initDatasource(notes)
-            }
+        /*
+        val notes = mutableListOf<Note>()
+        for(i in 0 until 500){
+            notes.add(Note(i))
         }
+
+        viewModel?.channelNotes?.initDatasource(notes)
+        */
+
+        viewModel?.channelNotes?.initDatasource(pageSize = 10)
 
         adapter = PagedListAdapterImpl {
             viewModel?.channelPostNotes?.postData(it)

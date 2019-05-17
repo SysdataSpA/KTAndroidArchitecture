@@ -1,9 +1,11 @@
 package com.sysdata.kt.ktandroidarchitecture.viewmodel
 
+import com.sysdata.kt.ktandroidarchitecture.DIUtils
 import com.sysdata.kt.ktandroidarchitecture.repository.model.UIUserLogged
 import com.sysdata.kt.ktandroidarchitecture.repository.model.UserLogged
 import com.sysdata.kt.ktandroidarchitecture.ui.Note
 import com.sysdata.kt.ktandroidarchitecture.ui.NoteDataSource
+import com.sysdata.kt.ktandroidarchitecture.ui.TestDataSource
 import com.sysdata.kt.ktandroidarchitecture.usecase.LoginActionParams
 import com.sysdata.kt.ktandroidarchitecture.usecase.LoginUseCase
 import it.sysdata.ktandroidarchitecturecore.interactor.*
@@ -16,8 +18,8 @@ class LoginViewModel: BaseViewModel() {
             .buildWithUiModel { UIUserLogged(it.username) }
 
     val channelNotes = DataSourceChannel.Builder<Int, Note>()
-            .dataSource(NoteDataSource::class.java)
+            .dataSource(TestDataSource::class.java)
             .build()
 
-    val channelPostNotes = Channel<Note>()
+    val channelPostNotes = DIUtils.channel
 }

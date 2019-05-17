@@ -50,16 +50,6 @@ open class Channel<Data>{
         }
     }
 
-    /**
-     * Use this class for create a instance of [Channel]
-     */
-    class ChannelBuilder<Data> internal constructor(private val channel: Channel<Data>) {
-
-        fun build(): Channel<Data> {
-            return channel
-
-        }
-    }
 }
 
 
