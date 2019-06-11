@@ -79,6 +79,9 @@ val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
             .useCase(LoginUseCase::class.java)
             .buildWithUiModel { UiModel(it) }
 ```
+or just **ac** command live template
+
+![alt text](docs/single_action.gif)
 
 ![alt text](docs/ActionFlowDiagram.png)
 
@@ -157,7 +160,9 @@ val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
         .addUseCase(...)
         .setLastUseCase(...)
 ```
+or just **acq** command live template
 
+![alt text](docs/queue_action.gif)
 ## CHANGELOG ##
 
 **1.0.1**
