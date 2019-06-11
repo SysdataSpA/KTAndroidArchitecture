@@ -70,7 +70,7 @@ val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
             .buildWithUiModel { UiModel(it) }
 ```
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/ActionFlowDiagram.png)
+![alt text](docs/ActionFlowDiagram.png)
 
 The flow have these steps:
 1. the execution of an Action performed by the method execute(...) of Action class
@@ -107,7 +107,7 @@ The UI layer of the architecture comprises activities, fragments and views.
 
 A **UIModel** is a object which contains all UI-related datas of a view, a fragment or an activity
 
-[Read More](UiModel.md)
+[Read More](docs/UiModel.md)
 
 ### 3.3 ViewModels with Livedata
 
