@@ -82,7 +82,7 @@ The flow have these steps:
 
 ### 2.5 Call the Action from the Activity/Fragment
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/UI_to_VM.png)
+![alt text](docs/UI_to_VM.png)
 
 An action has several methods like:
 - ``` action?.observe(...) ```, this method observe the success of the operation defined inside the usecase;
@@ -129,7 +129,7 @@ Into an **ActionQueue** each **UseCase**, except the first, take the result of t
 
 **Action**
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/SingleActionUseCase.png "Action")
+![alt text](docs/actionSingleUseCase.png "Action")
 
 ```kotlin
 val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
@@ -139,7 +139,7 @@ val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
 
 **ActionQueue**
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionQueue.png "ActionQueue")
+![alt text](docs/actionQueue.png "ActionQueue")
 
 ```kotlin
 val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
