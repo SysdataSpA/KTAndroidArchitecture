@@ -52,6 +52,11 @@ class LoginUseCase: UseCase<UserLogged, LoginActionParams>() {
     }
 }
 ```
+or just create with File Template New->Kotlin Use Case
+
+![alt text](docs/create_usecase.gif)
+
+
 The run function defined inside the UseCase can return a **Failure object** or a **Model object**.
 
 The input params are defined in a Param object which is a data class defined like this
