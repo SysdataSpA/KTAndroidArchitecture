@@ -10,13 +10,13 @@ It is a layer-based architecture that allows a real disentangle of the UI compon
 
 The main components are:
 
-* [UIModel](UiModel.md)
-* [UseCase](UseCase.md)
-* [Repository](Repository.md)
-* [Action](Action.md)
+* [UIModel](docs/UiModel.md)
+* [UseCase](docs/UseCase.md)
+* [Repository](docs/Repository.md)
+* [Action](docs/Action.md)
 
 Here you can find a list of guides depending on your implementations :
-* [DI - Use with Dagger](DI-Dagger.md)
+* [DI - Use with Dagger](docs/DI-Dagger.md)
 
 ## 2&#46; How to use it?
 
@@ -116,12 +116,12 @@ Each activity or fragment could have a **ViewModel** which is a object designed 
 ### 3.4 UseCase
 A **UseCase** is a wrapper for a small business logic operation. A **UseCase** can use one or more **Repository** to get or write the requested data, then it returns the response event.
 
-[Read More](UseCase.md)
+[Read More](docs/UseCase.md)
 
 ### 3.5 Repository
 A **Repository** handles the process of saving or retrieving data from a datasource, it is managed by one or more **UseCase**.
 
-[Read More](Repository.md)
+[Read More](docs/Repository.md)
 
 ### 3.6 Action
 An **Action** handles the process of calling a **UseCase** and map the response, generally an action use only one **UseCase** but is possible to define an **ActionQueue** to call multiple **UseCases** sequentially.
