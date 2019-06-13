@@ -33,7 +33,7 @@ open class BasePositionalDatasource<Data : Any>: PositionalDataSource<Data>(){
 
     /**
      * This method returns the datas in a given range of positions
-     * 
+     *
      * @param params LoadRangeParams
      * @param callback LoadRangeCallback<Data>
      */
