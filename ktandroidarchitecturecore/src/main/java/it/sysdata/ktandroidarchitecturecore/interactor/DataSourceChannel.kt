@@ -47,7 +47,6 @@ class DataSourceChannel<Key: Any, Data>: Channel<PagedList<Data>>(){
         val dataSourceBase = dataSource
         this.liveData = initLiveData(dataSource, pageSize, initialLoadSizeHint, placeHolderEnabled)
         if (datas != null && datas.isNotEmpty()) {
-            // TODO: check this
             if (dataSourceBase is BasePositionalDatasource) {
                 dataSourceBase.init(datas, pageSize)
             } else if(dataSourceBase is BaseItemKeyedDatasource){

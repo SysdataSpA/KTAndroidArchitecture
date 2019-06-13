@@ -16,7 +16,6 @@ import com.sysdata.kt.ktandroidarchitecture.repository.model.UIUserLogged
 import com.sysdata.kt.ktandroidarchitecture.usecase.LoginActionParams
 import com.sysdata.kt.ktandroidarchitecture.viewmodel.LoginViewModel
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
-import it.sysdata.ktandroidarchitecturecore.interactor.DataSourceChannel
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
@@ -40,16 +39,6 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
 
         viewModel?.actionLogin?.observe(this, ::onUserLoggged)
         viewModel?.actionLogin?.observeFailure(this, ::onLoginFailed)
-
-
-        /*
-        val notes = mutableListOf<Note>()
-        for(i in 0 until 500){
-            notes.add(Note(i))
-        }
-
-        viewModel?.channelNotes?.initDatasource(notes)
-        */
 
         viewModel?.channelNotes?.initDatasource(pageSize = 10)
 

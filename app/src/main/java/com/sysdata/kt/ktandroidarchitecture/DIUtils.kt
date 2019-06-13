@@ -1,6 +1,5 @@
 package com.sysdata.kt.ktandroidarchitecture
 
-import com.sysdata.kt.ktandroidarchitecture.repository.AuthRepository
 import com.sysdata.kt.ktandroidarchitecture.ui.Note
 import it.sysdata.ktandroidarchitecturecore.interactor.Channel
 
