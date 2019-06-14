@@ -3,15 +3,6 @@ A Kotlin android architecture with Google Architecture Components
 ## 1. A Brief Introduciton
 The app is a sample project that shows how to implement the KTAndroidArchitecture into your Android app.
 
-CHANGELOG:
-
-1.0.1 
-- fixed abnormal behavior on ActionQueue.
-- Added the possibility to add the action instance instead of the class. This is useful for dependency injection (i.e. Dagger).
-- Added SingleAction.
-- fixed the behavior of the error post in the observeFailure function.
-- Updated Gradle plugin version.
-
 ### 1.1 What is KTAndroidArchitecture?
 It is a layer-based architecture that allows a real disentangle of the UI components from the business logic. 
 
@@ -24,6 +15,9 @@ The main components are:
 * [Repository](Repository.md)
 * [Action](Action.md)
 
+Here you can find a list of guides depending on your implementations :
+* [DI - Use with Dagger](DI-Dagger.md)
+
 ## 2&#46; How to use it?
 
 ### 2.1 Import dependency
@@ -34,7 +28,7 @@ The main components are:
 ```
 #### 2.1.2 in your **App level `build.gradle`** add this dependecy
 ```gradle
-    implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.0'
+    implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.1'
 ```
 
 ### 2.2 Create a Repository
@@ -96,7 +90,7 @@ An action has several methods like:
 - ``` action?.observeLoadingStatus(...) ```, this method observe the loading state of the operation; 
 - ``` action?.execute(...) ```, this method call the run function inside the usecase and execute the operation;
 
-To call an action you have to write thisù
+To call an action you have to write this
 ```kotlin
         viewModel?.action?.observe(this, ::onActionSuccess)
         viewModel?.action?.observeFailure(this, ::onActionFailed)
