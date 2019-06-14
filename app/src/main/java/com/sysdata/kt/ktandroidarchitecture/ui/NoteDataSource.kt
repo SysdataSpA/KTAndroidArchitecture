@@ -13,23 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.sysdata.kt.ktandroidarchitecture
+package com.sysdata.kt.ktandroidarchitecture.ui
 
-import android.app.Application
+import it.sysdata.ktandroidarchitecturecore.BasePositionalDatasource
 
-
-class MainApplication : Application() {
-
-
-    companion object {
-        lateinit var INSTANCE: MainApplication
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        INSTANCE = this
-        MainApplicationConfig.instance
-    }
-
-
-}
+/**
+ * Implementation of [BasePositionalDatasource] with notes
+ */
+class NoteDataSource: BasePositionalDatasource<Note>()

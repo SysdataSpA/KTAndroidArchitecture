@@ -27,6 +27,7 @@ android {
 
 dependencies {
     def ktx_version = "2.0.0"
+    def kotlin_coroutines_version = "1.0.1"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -39,6 +40,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$ktx_version"
     implementation project (':ktandroidarchitecturecore')
     testImplementation 'junit:junit:4.12'
+
+    implementation 'androidx.paging:paging-runtime-ktx:2.1.0'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 }

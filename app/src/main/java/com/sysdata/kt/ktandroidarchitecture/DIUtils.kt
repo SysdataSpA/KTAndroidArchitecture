@@ -15,21 +15,18 @@
  */
 package com.sysdata.kt.ktandroidarchitecture
 
-import android.app.Application
+import com.sysdata.kt.ktandroidarchitecture.ui.Note
+import it.sysdata.ktandroidarchitecturecore.interactor.Channel
 
+class DIUtils {
 
-class MainApplication : Application() {
-
+    private object Holder {
+        val INSTANCE = Channel<Note>()
+    }
 
     companion object {
-        lateinit var INSTANCE: MainApplication
+        val channel: Channel<Note> by lazy {
+            Holder.INSTANCE
+        }
     }
-
-    override fun onCreate() {
-        super.onCreate()
-        INSTANCE = this
-        MainApplicationConfig.instance
-    }
-
-
 }
