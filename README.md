@@ -4,19 +4,19 @@ A Kotlin android architecture with Google Architecture Components
 The app is a sample project that shows how to implement the KTAndroidArchitecture into your Android app.
 
 ### 1.1 What is KTAndroidArchitecture?
-It is a layer-based architecture that allows a real disentangle of the UI components from the business logic. 
+It is a layer-based architecture that allows a real decoupling of the UI components from the business logic. 
 
 ![alt text](https://cdn-images-1.medium.com/max/800/1*I9WPcnpGNuI4CjxxrkP0-g.png "Simple Architecture Diagram")
 
 The main components are:
 
-* [UIModel](UiModel.md)
-* [UseCase](UseCase.md)
-* [Repository](Repository.md)
-* [Action](Action.md)
+* [UIModel](docs/UiModel.md)
+* [UseCase](docs/UseCase.md)
+* [Repository](docs/Repository.md)
+* [Action](docs/Action.md)
 
 Here you can find a list of guides depending on your implementations :
-* [DI - Use with Dagger](DI-Dagger.md)
+* [DI - Use with Dagger](docs/DI-Dagger.md)
 
 ## 2&#46; How to use it?
 
@@ -31,14 +31,19 @@ Here you can find a list of guides depending on your implementations :
     implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.1'
 ```
 
+#### 2.1.3 import the settings for use live template and file template
+
+* [Settings.zip](docs/settings.zip)
+
+
 ### 2.2 Create a Repository
-A repository needs just to extend **BaseRepository** in this way 
+A repository just needs to extend **BaseRepository** in this way 
 ```kotlin
   class AuthRepository:BaseRepository() 
 ```
 
 ### 2.3 Create a UseCase
-A usecase has to extend **UseCase<Out,In>** and implement a method run
+A usecase has to extend **UseCase<Out,In>** and implement a the "run" method:
 ```kotlin
 class LoginUseCase: UseCase<UserLogged, LoginActionParams>() {
     override suspend fun run(params: LoginActionParams): Either<Failure, UserLogged> {
@@ -47,7 +52,12 @@ class LoginUseCase: UseCase<UserLogged, LoginActionParams>() {
     }
 }
 ```
-The run function defined inside the UseCase can return a **Failure object** or a **Model object**.
+or you can just create a new usecase by going to File Template New->Kotlin Use Case
+
+![alt text](docs/create_usecase.gif)
+
+
+The "run" function defined inside the UseCase can return a **Failure object** or a **Model object**.
 
 The input params are defined in a Param object which is a data class defined like this
 ```kotlin
@@ -56,7 +66,7 @@ data class LoginActionParams(val email: String, val password: String) : ActionPa
 
 ### 2.4 Create a ViewModel for your Activity/Fragment
 
-A ViewModel needs to extend an abstract class BaseViewModel 
+A ViewModel needs to extend the abstract class BaseViewModel 
 ```kotlin
 class LoginViewModel: BaseViewModel()
 ```
@@ -69,28 +79,32 @@ val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
             .useCase(LoginUseCase::class.java)
             .buildWithUiModel { UiModel(it) }
 ```
+or you can just use the live template **ac** to create a usecase straight from the class!
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/ActionFlowDiagram.png)
+![alt text](docs/single_action.gif)
 
-The flow have these steps:
-1. the execution of an Action performed by the method execute(...) of Action class
-2. the first logical step is the post of an object inside an internal livedata called LoadingLiveData indicating that loading has started; the UI can observe this LiveData using the method observeLoadingStatus(...)
-3. the next step is the execution of a usecase which use repositories to retrieve some datas
-4. the result of repositories' call returned to the usecase
-5. the post of an object inside an internal livedata called LoadingLivedata indicating that loading has finished; the UI can observe this LiveData using the method observeLoadingStatus(...)
+![alt text](docs/ActionFlowDiagram.png)
+
+The flow is composed by the following steps:
+
+1. The execution of an Action performed by the method execute(...) of Action class.
+2. The first logical step is the post of an object inside an internal livedata called LoadingLiveData indicating that loading has started. The UI can observe this LiveData using the method observeLoadingStatus(...).
+3. The next step is the execution of a usecase which uses repositories to retrieve some data.
+4. The result of repositories' call is returned to the usecase.
+5. The post of an object inside an internal livedata called LoadingLivedata indicating that loading has finished. The UI can observe this LiveData using the method observeLoadingStatus(...)
 6. the post of the usecase result in two internal livedatas based on the success or the failure; the UI can observe these two LiveDatas by using observe(...) and observeFailure(...)
 
 ### 2.5 Call the Action from the Activity/Fragment
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/UI_to_VM.png)
+![alt text](docs/UI_to_VM.png)
 
 An action has several methods like:
-- ``` action?.observe(...) ```, this method observe the success of the operation defined inside the usecase;
-- ``` action?.observeFailure(...) ```, this method observe the failure of the operation; 
-- ``` action?.observeLoadingStatus(...) ```, this method observe the loading state of the operation; 
-- ``` action?.execute(...) ```, this method call the run function inside the usecase and execute the operation;
+- ``` action?.observe(...) ```, this method observes the success of the operation defined inside the usecase;
+- ``` action?.observeFailure(...) ```, this method observes the failure of the operation; 
+- ``` action?.observeLoadingStatus(...) ```, this method observes the loading state of the operation; 
+- ``` action?.execute(...) ```, this method calls the "run" function inside the usecase and executes the operation;
 
-To call an action you have to write thisù
+To call an action you have to write this:
 ```kotlin
         viewModel?.action?.observe(this, ::onActionSuccess)
         viewModel?.action?.observeFailure(this, ::onActionFailed)
@@ -101,35 +115,35 @@ To call an action you have to write thisù
 
 ### 3.1 UI
 
-The UI layer of the architecture comprises activities, fragments and views. 
+The UI layer of the architecture includes Activities, Fragments and Views. 
 
 ### 3.2 UIModel
 
-A **UIModel** is a object which contains all UI-related datas of a view, a fragment or an activity
+A **UIModel** is an object that contains all UI-related datas of a view, fragment or activity.
 
-[Read More](UiModel.md)
+[Read More](docs/UiModel.md)
 
 ### 3.3 ViewModels with Livedata
 
-Each activity or fragment could have a **ViewModel** which is a object designed to store and manage UI-related data in a lifecycle conscious way by defining some **Actions** to call one or more **UseCases**
+Each activity or fragment could have a **ViewModel** which is an object designed to store and manage UI-related data in a lifecycle aware way by defining some **Actions** to call one or more **UseCases**
 
 ### 3.4 UseCase
-A **UseCase** is a wrapper for a small business logic operation. A **UseCase** can use one or more **Repository** to get or write the requested data, then it returns the response event.
+A **UseCase** is a wrapper for a small business logic operation. A **UseCase** can use one or more **Repository** to retrieve or to set data, then it returns the response event.
 
-[Read More](UseCase.md)
+[Read More](docs/UseCase.md)
 
 ### 3.5 Repository
 A **Repository** handles the process of saving or retrieving data from a datasource, it is managed by one or more **UseCase**.
 
-[Read More](Repository.md)
+[Read More](docs/Repository.md)
 
 ### 3.6 Action
-An **Action** handles the process of calling a **UseCase** and map the response, generally an action use only one **UseCase** but is possible to define an **ActionQueue** to call multiple **UseCases** sequentially.
-Into an **ActionQueue** each **UseCase**, except the first, take the result of the previous as parameters and give the output to the next.
+An **Action** handles the process of calling a **UseCase** and map the response. Usually, an action uses only one **UseCase**, but it is possible to define an **ActionQueue** in order to call multiple **UseCases** sequentially.
+Into an **ActionQueue** each **UseCase**, except the first, takes the result of the previous as parameters and gives the output to the next one.
 
 **Action**
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/SingleActionUseCase.png "Action")
+![alt text](docs/actionSingleUseCase.png "Action")
 
 ```kotlin
 val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
@@ -139,7 +153,7 @@ val actionLogin = Action.Builder<ActionParams,Model,UiModel>()
 
 **ActionQueue**
 
-![alt text](https://github.com/SysdataSpA/KTAndroidArchitecture/blob/develop/actionQueue.png "ActionQueue")
+![alt text](docs/actionQueue.png "ActionQueue")
 
 ```kotlin
 val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
@@ -147,7 +161,9 @@ val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
         .addUseCase(...)
         .setLastUseCase(...)
 ```
+or just **acq** command live template
 
+![alt text](docs/queue_action.gif)
 ## CHANGELOG ##
 
 **1.0.1**
