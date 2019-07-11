@@ -1,17 +1,16 @@
 package com.sysdata.kt.ktandroidarchitecture.ui
 
-import android.app.Activity
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.viewModelScope
 import com.sysdata.kt.ktandroidarchitecture.R
 import com.sysdata.kt.ktandroidarchitecture.repository.model.UIUserLogged
-import com.sysdata.kt.ktandroidarchitecture.repository.model.UserLogged
 import com.sysdata.kt.ktandroidarchitecture.usecase.LoginActionParams
 import com.sysdata.kt.ktandroidarchitecture.viewmodel.LoginViewModel
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
@@ -19,10 +18,13 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
 
-    private var viewModel : LoginViewModel? = null
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.actionLogin.observe(this, ::onUserLoggged)
+        viewModel.actionLogin.observeFailure(this, ::onLoginFailed)
+
         setContentView(R.layout.activity_login)
         loginBtn.setOnClickListener(this)
         loginBtn.isEnabled = validateForm()
@@ -31,13 +33,6 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
         passwordValue.addTextChangedListener(this)
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-
-        viewModel?.actionLogin?.observe(this, ::onUserLoggged)
-        viewModel?.actionLogin?.observeFailure(this, ::onLoginFailed)
-    }
 
     private fun onLoginFailed(failure: Failure?) {
         Toast.makeText(this, "failure : ${failure.toString()}", Toast.LENGTH_SHORT).show()
@@ -48,11 +43,8 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
     }
 
 
-
     override fun onClick(p0: View?) {
-        p0?.let {
-            viewModel?.actionLogin?.execute(LoginActionParams(usernameValue.text.toString(), passwordValue.text.toString()))
-        }
+        viewModel.login(usernameValue.text.toString(),passwordValue.text.toString())
     }
 
     fun validateForm(): Boolean {
