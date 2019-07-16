@@ -83,8 +83,6 @@ or you can just use the live template **ac** to create a usecase straight from t
 
 ![alt text](docs/single_action.gif)
 
-![alt text](docs/ActionFlowDiagram.png)
-
 The flow is composed by the following steps:
 
 1. The execution of an Action performed by the method execute(...) of Action class.
@@ -93,6 +91,8 @@ The flow is composed by the following steps:
 4. The result of repositories' call is returned to the usecase.
 5. The post of an object inside an internal livedata called LoadingLivedata indicating that loading has finished. The UI can observe this LiveData using the method observeLoadingStatus(...)
 6. the post of the usecase result in two internal livedatas based on the success or the failure; the UI can observe these two LiveDatas by using observe(...) and observeFailure(...)
+
+![alt text](docs/ActionFlowDiagram.png)
 
 ### 2.5 Call the Action from the Activity/Fragment
 
