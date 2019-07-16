@@ -172,8 +172,9 @@ actionLogin.execute(LoginActionParams(username, password), viewModelScope)
 ```
 
 For more informations about the CoroutineScope, 
-please refer to [this medium article]: https://medium.com/androiddevelopers/easy-coroutines-in-android-viewmodelscope-25bffb605471 or
-to [to the official documentation]: https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/.
+please refer to this articles :
+- https://medium.com/androiddevelopers/easy-coroutines-in-android-viewmodelscope-25bffb605471 
+- https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/
 
 ## CHANGELOG ##
 
