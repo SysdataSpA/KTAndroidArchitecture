@@ -31,9 +31,9 @@ abstract class UseCase<out Type, in Params> where Type : Any, Params : ActionPar
 
     abstract suspend fun run(params: Params): Either<Failure, Type>
 
-    fun execute(onResult: (Either<Failure, Type>) -> Unit, params: Params) {
-        val job = GlobalScope.async(Dispatchers.Default, CoroutineStart.DEFAULT) { run(params) }
-        GlobalScope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
+    fun execute(onResult: (Either<Failure, Type>) -> Unit, params: Params, scope: CoroutineScope = GlobalScope) {
+        val job = scope.async(Dispatchers.Default, CoroutineStart.DEFAULT) { run(params) }
+        scope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
             onResult.invoke(job.await())
         }
 

@@ -21,6 +21,8 @@ import androidx.lifecycle.Observer
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
 import it.sysdata.ktandroidarchitecturecore.functional.Either
 import it.sysdata.ktandroidarchitecturecore.platform.SingleLiveEvent
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 
 /**
  * [Action] allow to define [UseCase] and [MutableLiveData] for handle the success, loading and failure case
@@ -44,10 +46,10 @@ class Action<Params : ActionParams, Model : Any, UiModel : Any> private construc
      *
      * @param params for use case
      */
-    fun execute(params: Params) {
+    fun execute(params: Params, scope: CoroutineScope = GlobalScope) {
         lastParams = params
         loadingLiveData.value = true
-        uc.execute({ it.either(::handleFailure, ::handleSuccess) }, params)
+        uc.execute({ it.either(::handleFailure, ::handleSuccess) }, params, scope)
     }
 
     /**
@@ -56,7 +58,7 @@ class Action<Params : ActionParams, Model : Any, UiModel : Any> private construc
      * @param params for use case
      */
     fun retry() {
-        if(lastParams == null) return
+        if (lastParams == null) return
         lastParams?.let {
             execute(it)
         }
