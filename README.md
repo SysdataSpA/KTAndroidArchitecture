@@ -164,7 +164,21 @@ val actionQueue = ActionQueue.Builder<LoginActionParams, UserLogged>()
 or just **acq** command live template
 
 ![alt text](docs/queue_action.gif)
+
+Optionally, you can add a CoroutineScope to the action. 
+
+```kotlin
+actionLogin.execute(LoginActionParams(username, password), viewModelScope)
+```
+
+For more informations about the CoroutineScope, 
+please refer to [this medium article]: https://medium.com/androiddevelopers/easy-coroutines-in-android-viewmodelscope-25bffb605471 or
+to [to the official documentation]: https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/.
+
 ## CHANGELOG ##
+
+**1.0.2**
+- Added Scope to actions.
 
 **1.0.1**
 - fixed abnormal behavior on ActionQueue.
