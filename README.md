@@ -28,7 +28,7 @@ Here you can find a list of guides depending on your implementations :
 ```
 #### 2.1.2 in your **App level `build.gradle`** add this dependecy
 ```gradle
-    implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.1'
+    implementation 'it.sysdata.mobile:ktandroidarchitecturecore:1.0.2'
 ```
 
 #### 2.1.3 import the settings for use live template and file template
