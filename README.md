@@ -99,16 +99,23 @@ The flow is composed by the following steps:
 ![alt text](docs/UI_to_VM.png)
 
 An action has several methods like:
-- ``` action?.observe(...) ```, this method observes the success of the operation defined inside the usecase;
-- ``` action?.observeFailure(...) ```, this method observes the failure of the operation; 
-- ``` action?.observeLoadingStatus(...) ```, this method observes the loading state of the operation; 
-- ``` action?.execute(...) ```, this method calls the "run" function inside the usecase and executes the operation;
+- ``` action.observe(...) ```, this method observes the success of the operation defined inside the usecase;
+- ``` action.observeFailure(...) ```, this method observes the failure of the operation; 
+- ``` action.observeLoadingStatus(...) ```, this method observes the loading state of the operation; 
+- ``` action.execute(...) ```, this method calls the "run" function inside the usecase and executes the operation;
+- ``` action.safeExecute(...) ```, this method calls the "run" function inside the usecase and executes the operation into in a SafeExecuteInterface;
+
+### 2.6 Custom safe executor
+By default safeExecute use a generic SafeExecute if you want use a custom safe executor just use
+``` BaseConfig.safeExecutor = MySafeExecutor() ```
+ 
+
 
 To call an action you have to write this:
 ```kotlin
-        viewModel?.action?.observe(this, ::onActionSuccess)
-        viewModel?.action?.observeFailure(this, ::onActionFailed)
-        viewModel?.action?.execute(Params)
+        viewModel.action.observe(this, ::onActionSuccess)
+        viewModel.action.observeFailure(this, ::onActionFailed)
+        viewModel.action.execute(Params)
 ```
 
 ## 3 KTAndroidArchitecture main components

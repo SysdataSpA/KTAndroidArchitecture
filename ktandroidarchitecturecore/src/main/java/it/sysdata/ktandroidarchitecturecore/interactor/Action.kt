@@ -51,7 +51,17 @@ class Action<Params : ActionParams, Model : Any, UiModel : Any> private construc
         loadingLiveData.value = true
         uc.execute({ it.either(::handleFailure, ::handleSuccess) }, params, scope)
     }
+    /**
+     * Execute the action in safe mode
+     *
+     * @param params for use case
+     */
 
+    fun safeExecute(params: Params, scope: CoroutineScope = GlobalScope) {
+        lastParams = params
+        loadingLiveData.value = true
+        uc.execute({ it.either(::handleFailure, ::handleSuccess) }, params, scope,true)
+    }
     /**
      * Retry the action performed last type
      *
