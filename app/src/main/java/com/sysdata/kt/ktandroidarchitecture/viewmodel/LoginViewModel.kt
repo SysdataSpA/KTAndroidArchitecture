@@ -8,14 +8,13 @@ import com.sysdata.kt.ktandroidarchitecture.usecase.LoginUseCase
 import it.sysdata.ktandroidarchitecturecore.interactor.Action
 import it.sysdata.ktandroidarchitecturecore.platform.BaseViewModel
 
-class LoginViewModel : BaseViewModel() {
+class LoginViewModel(loginUseCase: LoginUseCase) : BaseViewModel() {
 
 
 
-    private val myUseCase = LoginUseCase::class.java
 
      val actionLogin = Action.Builder<LoginActionParams, UserLogged, UIUserLogged>()
-            .useCase(myUseCase)
+            .useCase(loginUseCase)
             .buildWithUiModel { UIUserLogged(it.username) }
 
 

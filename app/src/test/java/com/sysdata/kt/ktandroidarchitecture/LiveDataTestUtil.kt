@@ -27,7 +27,7 @@ object LiveDataTestUtil {
 
         action.observe(lifecycle, observer)
 
-        latch.await(2, TimeUnit.SECONDS)
+        latch.await(100, TimeUnit.MILLISECONDS)
 
         return data
     }
@@ -44,7 +44,7 @@ object LiveDataTestUtil {
 
         action.observeFailure(lifecycle, observer)
 
-        latch.await(2, TimeUnit.SECONDS)
+        latch.await(100, TimeUnit.MILLISECONDS)
 
         return data
     }

@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/Scaricati-KTAndroidArchitecture.iml" filepath="$PROJECT_DIR$/Scaricati-KTAndroidArchitecture.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/ktandroidarchitecturecore/ktandroidarchitecturecore.iml" filepath="$PROJECT_DIR$/ktandroidarchitecturecore/ktandroidarchitecturecore.iml" />
+      <module fileurl="file://$PROJECT_DIR$/networkmodule/networkmodule.iml" filepath="$PROJECT_DIR$/networkmodule/networkmodule.iml" />
     </modules>
   </component>
 </project>

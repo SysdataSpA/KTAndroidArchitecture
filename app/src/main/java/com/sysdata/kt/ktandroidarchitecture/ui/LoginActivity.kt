@@ -1,24 +1,22 @@
 package com.sysdata.kt.ktandroidarchitecture.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.viewModelScope
 import com.sysdata.kt.ktandroidarchitecture.R
 import com.sysdata.kt.ktandroidarchitecture.repository.model.UIUserLogged
-import com.sysdata.kt.ktandroidarchitecture.usecase.LoginActionParams
 import com.sysdata.kt.ktandroidarchitecture.viewmodel.LoginViewModel
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
 import kotlinx.android.synthetic.main.activity_login.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
 
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel by viewModel<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +37,13 @@ class LoginActivity : FragmentActivity(), View.OnClickListener, TextWatcher {
     }
 
     private fun onUserLoggged(userLogged: UIUserLogged?) {
+        startActivity(Intent(this, GitHubActivity::class.java))
         Toast.makeText(this, "user : ${userLogged?.email}", Toast.LENGTH_SHORT).show()
     }
 
 
     override fun onClick(p0: View?) {
-        viewModel.login(usernameValue.text.toString(),passwordValue.text.toString())
+        viewModel.login(usernameValue.text.toString(), passwordValue.text.toString())
     }
 
     fun validateForm(): Boolean {

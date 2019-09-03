@@ -1,35 +1,48 @@
 package com.sysdata.kt.ktandroidarchitecture
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.sysdata.kt.ktandroidarchitecture.di.appModule
 import com.sysdata.kt.ktandroidarchitecture.repository.model.UserLogged
 import com.sysdata.kt.ktandroidarchitecture.usecase.LoginActionParams
 import com.sysdata.kt.ktandroidarchitecture.usecase.LoginUseCase
 import it.sysdata.ktandroidarchitecturecore.exception.Failure
 import it.sysdata.ktandroidarchitecturecore.functional.map
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
-class LoginUseCaseTest {
+@ExperimentalCoroutinesApi
+class LoginUseCaseTest : KoinTest {
 
-    // Set the main coroutines dispatcher for unit testing
-    @get:Rule
-    var coroutinesRule = MainCoroutineRule()
+
     // Executes tasks in the Architecture Components in the same thread
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var useCase: LoginUseCase
+    val useCase: LoginUseCase by inject()
     @Before
-    fun setup() {
-        useCase = LoginUseCase()
+    fun before() {
+        startKoin {
+            printLogger()
+            modules(appModule)
+        }
     }
-
+    @After
+    fun after() {
+        stopKoin()
+    }
     @Test
-    fun runUseCase() = runBlocking {
+    fun runUseCase() = runBlockingTest {
         val email = "email"
         val password = "test"
         val params = LoginActionParams(email, password)
@@ -42,7 +55,7 @@ class LoginUseCaseTest {
     }
 
     @Test
-    fun runFailUsernameEmptyUseCase() = runBlocking {
+    fun runFailUsernameEmptyUseCase() = runBlockingTest {
         val email = ""
         val password = "test"
         var failureTest: Failure? = null
@@ -61,7 +74,7 @@ class LoginUseCaseTest {
 
 
     @Test
-    fun runFailPasswordEmptyUseCase() = runBlocking {
+    fun runFailPasswordEmptyUseCase() = runBlockingTest {
         val email = "email"
         val password = ""
         var failureTest: Failure? = null
