@@ -176,6 +176,11 @@ please refer to this articles :
 - https://medium.com/androiddevelopers/easy-coroutines-in-android-viewmodelscope-25bffb605471 
 - https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/
 
+### 3.7 InstrumentedTests
+It is possible to perform instrumented tests on the architecture. To learn more about instrumented tests,
+Please, refer to the following section.
+[InstrumentedTests](docs/InstrumentedTests.md)
+
 ## CHANGELOG ##
 
 **1.0.2**
