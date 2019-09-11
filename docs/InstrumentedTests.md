@@ -173,7 +173,7 @@ In our example, the assertion is that the button is enabled only if all the thre
 Once the test has been written, the run must be performed.
 Right click on the class of the test and click on "Run '<ClassName>'" or on "Debug '<ClassName>'"
 
-![alt text](test/run_test.png)
+![alt text](test/test_run_test.png)
 
 The "Run" tab will contain all the information relating to the compilation and run of the test.
 In case of failure, the relevant logs will be shown.
