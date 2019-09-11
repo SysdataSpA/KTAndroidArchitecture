@@ -3,8 +3,9 @@
 ### 1 Intro
 The aim of the document is to provide base indications on UI automated tests.
 At the moment of writing, Google suggests to use two frameworks:
-* [Espresso]
-* [UI Automator]
+* Espresso
+* UI Automator
+
 In the following paragraphs, I'll describe an example of a test executed with Espresso.
 
 ### 2.1 Preliminary actions
@@ -154,14 +155,17 @@ Briefly, the actions that are performed in the test are:
 
 
 Recreate the view -> `onView()`
+
 The `onView()` method allows you to select one or more Views that respect the conditions expressed as an argument. In the example, the condition is `withId()` which allows to identify the View with a given ID.
 There are many ways to select the views.
 
 Perform actions on a selected view -> `perform()`
+
 The `onPerform()` method replaces the user interaction with the device. Allows you to modify the selected view. It is therefore possible to insert texts, click, scroll a list, close the keyboard, etc.
 There are default methods for standard Android views but it is also possible to create custom actions in case you want to interact with a view created ad hoc. This last operation was performed in the `SdEditTextUtils` class to insert the text inside the `EditText` nested inside the custom view `SDEditText`
 
 Perform assertions after one or more actions -> `check()`
+
 The `check()` method allows to check assertions that we defined during the test analysis. The assertion check is passed as a method argument and can be customized in order to understand all the possible scenarios.
 In our example, the assertion is that the button is enabled only if all the three form fields are not empty. If an assertion fails, the entire test fails.
 
@@ -169,19 +173,19 @@ In our example, the assertion is that the button is enabled only if all the thre
 Once the test has been written, the run must be performed.
 Right click on the class of the test and click on "Run '<ClassName>'" or on "Debug '<ClassName>'"
 
-![alt text](docs/test/run_test.png)
+![alt text](test/run_test.png)
 
 The "Run" tab will contain all the information relating to the compilation and run of the test.
 In case of failure, the relevant logs will be shown.
 
-![alt text](docs/test/test_result.png)
+![alt text](test/test_result.png)
 
 ### 5 Firebase
 Firebase allows to run tests on a variety of devices in an automated way providing the following feedbacks
-* [esito dei test]
-* [video dei test]
-* [log del dispositivo durante l’esecuzione dei test]
-* [prestazioni dei test]
+* esito dei test
+* video dei test
+* log del dispositivo durante l’esecuzione dei test
+* prestazioni dei test
 
 These automations are subject to subscription or payment based on consumption.
 Performing tests from the console is quite simple; the only modification necessary is to insert, in the gradle file, the applicationId of the test APK. In this way, after compiling the test and the APK, both APKs will be created in the "build > outputs > apk" directory which will be used during the test configuration in the Firebase console.
@@ -195,25 +199,25 @@ defaultConfig {
    testInstrumentationRunner "it.sysdata.sysdatastoreInstrumentationTest"
 }
 ```
-![alt text](docs/test/test_apk_location.png)
+![alt text](test/test_apk_location.png)
 
 Enter the "Test Lab" section and click on "Run a Test" then select the "Run an instrument test" option
 
-![alt text](docs/test/test_run_instrumented_firebase.png)
+![alt text](test/test_run_instrumented_firebase.png)
 
 In the following screen, it will be requested to insert the original APK and the test APK.
 
-![alt text](docs/test/test_apk_request_firebase.png)
+![alt text](test/test_apk_request_firebase.png)
 
 After clicking on "Continue", it will be requested to select the target devices that will run the tests.
 
-![alt text](docs/test/test_select_devices_firebase.png)
+![alt text](test/test_select_devices_firebase.png)
 
 The test configuration is completed. Now we can see the result.
 In the test screen, we'll be able to see all the selected devices of the previous screen. Clicking upon each of the devices, it will be possible to see the specific results.
 
-![alt text](docs/test/test_device_results_firebase.png)
+![alt text](test/test_device_results_firebase.png)
 
 As explained before, inside a single result, it is possible to view all the information of a single test.
 
-![alt text](docs/test/test_single_device_result_firebase.png)
+![alt text](test/test_single_device_result_firebase.png)
