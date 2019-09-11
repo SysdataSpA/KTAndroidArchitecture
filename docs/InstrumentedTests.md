@@ -182,10 +182,10 @@ In case of failure, the relevant logs will be shown.
 
 ### 5 Firebase
 Firebase allows to run tests on a variety of devices in an automated way providing the following feedbacks
-* esito dei test
-* video dei test
-* log del dispositivo durante l’esecuzione dei test
-* prestazioni dei test
+* test result
+* test video
+* device log during test execution
+* Performance test
 
 These automations are subject to subscription or payment based on consumption.
 Performing tests from the console is quite simple; the only modification necessary is to insert, in the gradle file, the applicationId of the test APK. In this way, after compiling the test and the APK, both APKs will be created in the "build > outputs > apk" directory which will be used during the test configuration in the Firebase console.
