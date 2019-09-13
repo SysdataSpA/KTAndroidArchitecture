@@ -16,15 +16,14 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.mockito.MockitoAnnotations
 
 
-class LoginViewModelTest:KoinTest {
+class LoginViewModelTest : KoinTest {
     // Executes tasks in the Architecture Components in the same thread
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val loginViewModelTest:LoginViewModel by inject()
+    private val loginViewModelTest: LoginViewModel by inject()
 
     @Before
     fun before() {
@@ -33,6 +32,7 @@ class LoginViewModelTest:KoinTest {
             modules(appModule)
         }
     }
+
     @After
     fun after() {
         stopKoin()
