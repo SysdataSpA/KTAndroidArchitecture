@@ -17,6 +17,9 @@ android.defaultConfig {
      testImplementation 'org.mockito:mockito-core:2.23.0'
      testImplementation 'android.arch.core:core-testing:1.1.1'
      testImplementation 'com.jraska.livedata:testing-ktx:1.1.0'
+     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.0"
+     // Koin for Unit tests
+     testImplementation "org.koin:koin-test:$koin_version"
 }
 ```
 
