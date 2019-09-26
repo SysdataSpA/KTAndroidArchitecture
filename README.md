@@ -18,7 +18,7 @@ The main components are:
 Here you can find a list of guides depending on your implementations :
 * [DI - Use with Dagger](docs/DI-Dagger.md)
 * [Instrumented Tests with Espresso](docs/InstrumentedTests.md)
-* [Unit Tests](docs/UnitTests.md)
+* [Unit Tests with Koin](docs/UnitTests.md)
 
 ## 2&#46; How to use it?
 
