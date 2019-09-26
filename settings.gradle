@@ -1,1 +1,1 @@
-include ':app', ':ktandroidarchitecturecore'
+include ':app', ':ktandroidarchitecturecore', ':networkmodule'

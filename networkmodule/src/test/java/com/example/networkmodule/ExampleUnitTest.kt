@@ -1,4 +1,4 @@
-package com.sysdata.kt.ktandroidarchitecture
+package com.example.networkmodule
 
 import org.junit.Test
 
