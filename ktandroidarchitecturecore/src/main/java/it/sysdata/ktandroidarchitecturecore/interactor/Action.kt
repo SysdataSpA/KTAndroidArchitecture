@@ -51,12 +51,12 @@ class Action<Params : ActionParams, Model : Any, UiModel : Any> private construc
         loadingLiveData.value = true
         uc.execute({ it.either(::handleFailure, ::handleSuccess) }, params, scope)
     }
+
     /**
-     * Execute the action in safe mode
+     * Execute the action in safe mode. This means tha whenever an exception is thrown, the architecture will return a [Failure.InternalError] failure.
      *
      * @param params for use case
      */
-
     fun safeExecute(params: Params, scope: CoroutineScope = GlobalScope) {
         lastParams = params
         loadingLiveData.value = true
