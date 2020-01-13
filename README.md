@@ -108,9 +108,20 @@ An action has several methods like:
 - ``` action.safeExecute(...) ```, this method calls the "run" function inside the usecase and executes the operation into in a SafeExecuteInterface;
 
 ### 2.6 Custom safe executor
-By default safeExecute use a generic SafeExecute if you want use a custom safe executor just use
-``` BaseConfig.safeExecutor = MySafeExecutor() ```
- 
+The `safeExecute()` method call is meant to be used if you plan a different behaviour based on the error of your response.
+If you use the simple `execute()` call, whenever there's an error, the method will throw an exception and you will have to 
+handle it by try-catching it and defining a behaviour for that UseCase.
+If you use the `safeExecute()` method call, whenever there's an error, it will fallback to an `InternalError` failure in case of
+an exception, saving you from an application crash.
+Moreover, if you'd like to customize the behaviour in a general way, you can define a class that extends from the `SafeExecuteInterface`
+and inside the overridden `safeExecute()` call you can define the custom behaviour you want for your application.
+Finally, you'll have to assign the custom `SafeExecutor` as the `BaseConfig.safeExecutor` variable.
+
+```kotlin
+        BaseConfig.safeExecutor = MySafeExecutor() 
+```
+
+It is suggested that you assign this variable as soon as possible (i.e. in the `Application`'s class `onCreate()` method).
 
 
 To call an action you have to write this:
@@ -199,6 +210,7 @@ To learn more about unit tests, please, refer to the following section: [Unit te
 
 **1.0.2**
 - Added Scope to actions.
+- added safeExecute.
 
 **1.0.1**
 - fixed abnormal behavior on ActionQueue.
@@ -209,7 +221,7 @@ To learn more about unit tests, please, refer to the following section: [Unit te
 
 # License
 
-      Copyright (C) 2019 Sysdata S.p.A.
+      Copyright (C) 2020 Sysdata S.p.A.
 
       Licensed under the Apache License, Version 2.0 (the "License");
       you may not use this file except in compliance with the License.
