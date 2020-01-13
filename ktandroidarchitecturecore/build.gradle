@@ -4,7 +4,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 // This is the library version used when deploying the artifact
-version = "1.0.2"
+version = "1.0.3"
 
 group = "it.sysdata.mobile"
 

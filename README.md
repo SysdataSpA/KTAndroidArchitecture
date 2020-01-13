@@ -208,9 +208,11 @@ To learn more about unit tests, please, refer to the following section: [Unit te
 
 ## CHANGELOG ##
 
+**1.0.3**
+- added safeExecute.
+
 **1.0.2**
 - Added Scope to actions.
-- added safeExecute.
 
 **1.0.1**
 - fixed abnormal behavior on ActionQueue.
