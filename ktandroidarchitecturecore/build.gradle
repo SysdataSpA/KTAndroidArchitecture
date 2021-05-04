@@ -90,7 +90,7 @@ ext {
     bintrayRepo = 'maven'
     bintrayName = 'ktandroidarchitecturecore'
     libraryName = 'ktandroidarchitecturecore'
-    bintrayOrganization = 'sysdata'
+    bintrayOrganization = 'sysdata-mobile'
 }
 
 //apply from: 'publishArtifactory.gradle'
